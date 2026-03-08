@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import { createClient } from "@/utils/supabase/client"
+import { signup as authSignup } from "@/services/auth.service"
 
 export function useSignup() {
   const [loading, setLoading] = useState(false)
@@ -14,14 +14,7 @@ export function useSignup() {
     setErrorMessage("")
 
     try {
-      const supabase = createClient()
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/confirm`,
-        },
-      })
+      const { error } = await authSignup(email, password)
 
       if (error) {
         setErrorMessage(error.message)
