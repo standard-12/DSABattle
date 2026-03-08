@@ -7,15 +7,44 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Swords, Eye, EyeOff, Mail, Lock, Github } from "lucide-react"
+import { createClient } from "@/utils/supabase/client"
 
 export function SignupForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [successMessage, setSuccessMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Auth logic will be connected later
+    setIsLoading(true)
+    setSuccessMessage("")
+    setErrorMessage("")
+
+    try {
+      const supabase = createClient()
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: "http://localhost:3000/auth/confirm",
+        },
+      })
+
+      if (error) {
+        setErrorMessage(error.message)
+      } else {
+        setSuccessMessage("Check your email to verify your account.")
+        setEmail("")
+        setPassword("")
+      }
+    } catch (err) {
+      setErrorMessage("An unexpected error occurred. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -90,6 +119,18 @@ export function SignupForm() {
               Join the arena and start competing
             </p>
           </div>
+
+          {/* Messages */}
+          {successMessage && (
+            <div className="mb-6 rounded-lg bg-green-50 p-4 text-sm text-green-800 dark:bg-green-900/20 dark:text-green-400">
+              {successMessage}
+            </div>
+          )}
+          {errorMessage && (
+            <div className="mb-6 rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-red-900/20 dark:text-red-400">
+              {errorMessage}
+            </div>
+          )}
 
           {/* Social login */}
           <div className="flex flex-col gap-3">
@@ -178,8 +219,8 @@ export function SignupForm() {
               </p>
             </div>
 
-            <Button type="submit" className="mt-2 font-semibold">
-              Create Account
+            <Button type="submit" className="mt-2 font-semibold" disabled={isLoading}>
+              {isLoading ? "Creating Account..." : "Create Account"}
             </Button>
           </form>
 
