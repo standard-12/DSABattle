@@ -7,43 +7,28 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Swords, Eye, EyeOff, Mail, Lock, Github } from "lucide-react"
-import { createClient } from "@/utils/supabase/client"
+import { useSignup } from "@/hooks/useSignup"
 
 export function SignupForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [successMessage, setSuccessMessage] = useState("")
-  const [errorMessage, setErrorMessage] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const { signup, loading, successMessage, errorMessage, setErrorMessage } = useSignup()
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsLoading(true)
-    setSuccessMessage("")
-    setErrorMessage("")
 
-    try {
-      const supabase = createClient()
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: "http://localhost:3000/auth/confirm",
-        },
-      })
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match.")
+      return
+    }
 
-      if (error) {
-        setErrorMessage(error.message)
-      } else {
-        setSuccessMessage("Check your email to verify your account.")
-        setEmail("")
-        setPassword("")
-      }
-    } catch (err) {
-      setErrorMessage("An unexpected error occurred. Please try again.")
-    } finally {
-      setIsLoading(false)
+    await signup(email, password)
+    if (!errorMessage) {
+      setEmail("")
+      setPassword("")
+      setConfirmPassword("")
     }
   }
 
@@ -219,8 +204,24 @@ export function SignupForm() {
               </p>
             </div>
 
-            <Button type="submit" className="mt-2 font-semibold" disabled={isLoading}>
-              {isLoading ? "Creating Account..." : "Create Account"}
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="confirmPassword" className="text-foreground">Confirm Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  id="confirmPassword"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Confirm your password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="bg-secondary/50 pl-10 pr-10"
+                  required
+                />
+              </div>
+            </div>
+
+            <Button type="submit" className="mt-2 font-semibold" disabled={loading}>
+              {loading ? "Creating Account..." : "Create Account"}
             </Button>
           </form>
 
