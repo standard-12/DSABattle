@@ -7,15 +7,17 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Swords, Eye, EyeOff, Mail, Lock, Github } from "lucide-react"
+import { useLogin } from "@/hooks/useLogin"
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const { login, loading, errorMessage } = useLogin()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Auth logic will be connected later
+    await login(email, password)
   }
 
   return (
@@ -90,6 +92,13 @@ export function LoginForm() {
               Log in to continue your battles
             </p>
           </div>
+
+          {/* Error message */}
+          {errorMessage && (
+            <div className="mb-6 rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-red-900/20 dark:text-red-400">
+              {errorMessage}
+            </div>
+          )}
 
           {/* Social login */}
           <div className="flex flex-col gap-3">
@@ -183,8 +192,8 @@ export function LoginForm() {
               </div>
             </div>
 
-            <Button type="submit" className="mt-2 font-semibold">
-              Log In
+            <Button type="submit" className="mt-2 font-semibold" disabled={loading}>
+              {loading ? "Logging in..." : "Log In"}
             </Button>
           </form>
 

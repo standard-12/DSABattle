@@ -11,3 +11,10 @@ export async function signup(email: string, password: string) {
     },
   })
 }
+
+export async function login(email: string, password: string) {
+  return supabase.auth.signInWithPassword({
+    email,
+    password,
+  })
+}
