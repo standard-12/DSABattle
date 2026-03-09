@@ -27,7 +27,7 @@ export async function updateSession(request: NextRequest) {
   );
 
   // This triggers a session refresh if the user has a valid session
-  await supabase.auth.getUser();
+  await supabase.auth.getUser();// does it get refreshed
 
   return response;
 }
