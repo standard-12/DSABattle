@@ -7,6 +7,7 @@ import {
   signInWithGoogle as googleLogin,
   signInWithGithub as githubLogin,
 } from "@/services/auth.service"
+import { createClient } from "@/utils/supabase/client"
 
 export function useLogin() {
   const [loading, setLoading] = useState(false)
@@ -23,7 +24,34 @@ export function useLogin() {
       if (error) {
         setErrorMessage(error.message)
       } else {
-        router.push("/dashboard")
+        const supabase = createClient()
+        const {
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser()
+
+        if (userError || !user) {
+          setErrorMessage(userError?.message ?? "Unable to load your account.")
+          return
+        }
+
+        const { data: profile, error: profileError } = await supabase
+          .from("profiles")
+          .select("id")
+          .eq("id", user.id)
+          .single()
+
+        if (profile) {
+          router.push("/dashboard")
+          return
+        }
+
+        if (profileError && profileError.code !== "PGRST116") {
+          setErrorMessage(profileError.message)
+          return
+        }
+
+        router.push("/onboarding")
       }
     } catch {
       setErrorMessage("An unexpected error occurred. Please try again.")
