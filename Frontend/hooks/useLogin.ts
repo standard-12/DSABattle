@@ -2,7 +2,11 @@
 
 import { useState, useCallback } from "react"
 import { useRouter } from "next/navigation"
-import { login as authLogin } from "@/services/auth.service"
+import {
+  login as authLogin,
+  signInWithGoogle as googleLogin,
+  signInWithGithub as githubLogin,
+} from "@/services/auth.service"
 
 export function useLogin() {
   const [loading, setLoading] = useState(false)
@@ -28,8 +32,36 @@ export function useLogin() {
     }
   }, [router])
 
+  const handleGoogleLogin = useCallback(async () => {
+    setLoading(true)
+    setErrorMessage("")
+    try {
+      const { error } = await googleLogin()
+      if (error) setErrorMessage(error.message)
+    } catch {
+      setErrorMessage("Could not connect to Google. Please try again.")
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  const handleGithubLogin = useCallback(async () => {
+    setLoading(true)
+    setErrorMessage("")
+    try {
+      const { error } = await githubLogin()
+      if (error) setErrorMessage(error.message)
+    } catch {
+      setErrorMessage("Could not connect to GitHub. Please try again.")
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
   return {
     login,
+    handleGoogleLogin,
+    handleGithubLogin,
     loading,
     errorMessage,
     setErrorMessage,

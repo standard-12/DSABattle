@@ -18,3 +18,21 @@ export async function login(email: string, password: string) {
     password,
   })
 }
+
+export async function signInWithGoogle() {
+  return supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${window.location.origin}/auth/confirm`,
+    },
+  })
+}
+
+export async function signInWithGithub() {
+  return supabase.auth.signInWithOAuth({
+    provider: "github",
+    options: {
+      redirectTo: `${window.location.origin}/auth/confirm`,
+    },
+  })
+}
