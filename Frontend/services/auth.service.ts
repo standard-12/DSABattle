@@ -19,6 +19,10 @@ export async function login(email: string, password: string) {
   })
 }
 
+export async function logout() {
+  return supabase.auth.signOut()
+}
+
 export async function signInWithGoogle() {
   return supabase.auth.signInWithOAuth({
     provider: "google",

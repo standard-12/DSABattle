@@ -1,12 +1,32 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { LogoutButton } from "@/components/logout-button"
+import { createClient } from "@/utils/supabase/client"
 import { Swords, Menu, X } from "lucide-react"
+import type { User } from "@supabase/supabase-js"
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [user, setUser] = useState<User | null>(null)
+
+  useEffect(() => {
+    const supabase = createClient()
+
+    // Fetch initial session
+    supabase.auth.getUser().then(({ data }) => setUser(data.user))
+
+    // Subscribe to auth state changes (login / logout from other tabs, etc.)
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
@@ -42,12 +62,23 @@ export function Navbar() {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Button variant="ghost" asChild>
-            <Link href="/login">Log In</Link>
-          </Button>
-          <Button asChild>
-            <Link href="/signup">Get Started</Link>
-          </Button>
+          {user ? (
+            <>
+              <Button variant="ghost" asChild>
+                <Link href="/dashboard">Dashboard</Link>
+              </Button>
+              <LogoutButton variant="outline" />
+            </>
+          ) : (
+            <>
+              <Button variant="ghost" asChild>
+                <Link href="/login">Log In</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/signup">Get Started</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         <button
@@ -88,12 +119,23 @@ export function Navbar() {
               Leaderboard
             </Link>
             <div className="flex flex-col gap-2 pt-2">
-              <Button variant="ghost" asChild className="justify-start">
-                <Link href="/login">Log In</Link>
-              </Button>
-              <Button asChild>
-                <Link href="/signup">Get Started</Link>
-              </Button>
+              {user ? (
+                <>
+                  <Button variant="ghost" asChild className="justify-start">
+                    <Link href="/dashboard">Dashboard</Link>
+                  </Button>
+                  <LogoutButton variant="outline" className="justify-start" />
+                </>
+              ) : (
+                <>
+                  <Button variant="ghost" asChild className="justify-start">
+                    <Link href="/login">Log In</Link>
+                  </Button>
+                  <Button asChild>
+                    <Link href="/signup">Get Started</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>
