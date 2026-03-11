@@ -16,7 +16,6 @@ export async function createClient() {
           try {
             cookiesToSet.forEach(({ name, value, options }) => {
               cookieStore.set(name, value, options);
-              console.log(`${name}=${value}`);
             });
           } catch {
             // The `setAll` method was called from a Server Component.
