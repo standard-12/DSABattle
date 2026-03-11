@@ -19,22 +19,21 @@ export function useLogin() {
     setErrorMessage("")
 
     try {
-      const { error } = await authLogin(email, password)
+      // signInWithPassword already returns the user — no need for a
+      // separate getUser() call which would race for the same Web Lock.
+      const { data, error } = await authLogin(email, password)
 
       if (error) {
         setErrorMessage(error.message)
       } else {
-        const supabase = createClient()
-        const {
-          data: { user },
-          error: userError,
-        } = await supabase.auth.getUser()
+        const user = data.user
 
-        if (userError || !user) {
-          setErrorMessage(userError?.message ?? "Unable to load your account.")
+        if (!user) {
+          setErrorMessage("Unable to load your account.")
           return
         }
 
+        const supabase = createClient()
         const { data: profile, error: profileError } = await supabase
           .from("profiles")
           .select("id")

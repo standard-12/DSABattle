@@ -13,10 +13,11 @@ export async function signup(email: string, password: string) {
 }
 
 export async function login(email: string, password: string) {
-  return supabase.auth.signInWithPassword({
+  const result = await supabase.auth.signInWithPassword({
     email,
     password,
   })
+  return result
 }
 
 export async function logout() {

@@ -1,4 +1,3 @@
-import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
 
@@ -28,31 +27,11 @@ function redirectTo(request: NextRequest, response: NextResponse, pathname: stri
 }
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
-  // Refresh the auth session first so downstream checks use the latest cookies.
-  const response = await updateSession(request);
+  // Refresh the auth session and get the user + Supabase client in one pass.
+  // Previously a second client was created and getUser() was called again,
+  // causing redundant auth round-trips.
+  const { response, user, supabase } = await updateSession(request);
   const pathname = request.nextUrl.pathname;
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            request.cookies.set(name, value);
-            response.cookies.set(name, value, options);
-          });
-        },
-      },
-    }
-  );
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
 
   if (!user && isProtectedRoute(pathname)) {
     return redirectTo(request, response, "/login");

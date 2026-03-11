@@ -15,10 +15,9 @@ export function Navbar() {
   useEffect(() => {
     const supabase = createClient()
 
-    // Fetch initial session
-    supabase.auth.getUser().then(({ data }) => setUser(data.user))
-
-    // Subscribe to auth state changes (login / logout from other tabs, etc.)
+    // onAuthStateChange fires an INITIAL_SESSION event with the current
+    // session, so a separate getUser() call is unnecessary and would race
+    // for the same Web Lock, causing "Lock broken by another request".
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {

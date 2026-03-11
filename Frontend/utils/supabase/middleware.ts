@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
+import type { User } from "@supabase/supabase-js";
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
@@ -26,8 +27,11 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // This triggers a session refresh if the user has a valid session
-  await supabase.auth.getUser();// does it get refreshed
+  // Refresh the session and return both the user and the Supabase client so
+  // the caller can reuse them without a second getUser() round-trip.
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  return response;
+  return { response, user, supabase };
 }
