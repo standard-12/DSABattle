@@ -5,6 +5,11 @@ import { cn } from '@/lib/utils'
 function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
   return (
     <input
+      // Suppress hydration warnings caused by browser extensions injecting
+      // attributes (e.g. fdprocessedid) on the client DOM. The input is a
+      // controlled element with stable props, so this only silences
+      // spurious warnings while preserving behavior.
+      suppressHydrationWarning
       type={type}
       data-slot="input"
       className={cn(
