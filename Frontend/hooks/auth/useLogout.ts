@@ -20,10 +20,10 @@ export function useLogout() {
 
             // Always redirect to login — even on error the local session
             // state is likely stale, so sending the user back is safest.
-            router.push("/login")
+            router.push("/auth/login")
         } catch {
             console.error("An unexpected error occurred during logout.")
-            router.push("/login")
+            router.push("/auth/login")
         } finally {
             setLoading(false)
         }

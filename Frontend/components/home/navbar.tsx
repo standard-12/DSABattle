@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { LogoutButton } from "@/components/logout-button"
+import { LogoutButton } from "@/components/auth/logout-button"
 import { createClient } from "@/utils/supabase/client"
 import { Swords, Menu, X } from "lucide-react"
 import type { User } from "@supabase/supabase-js"
@@ -71,10 +71,10 @@ export function Navbar() {
           ) : (
             <>
               <Button variant="ghost" asChild>
-                <Link href="/login">Log In</Link>
+                <Link href="/auth/login">Log In</Link>
               </Button>
               <Button asChild>
-                <Link href="/signup">Get Started</Link>
+                <Link href="/auth/signup">Get Started</Link>
               </Button>
             </>
           )}
@@ -128,10 +128,10 @@ export function Navbar() {
               ) : (
                 <>
                   <Button variant="ghost" asChild className="justify-start">
-                    <Link href="/login">Log In</Link>
+                    <Link href="/auth/login">Log In</Link>
                   </Button>
                   <Button asChild>
-                    <Link href="/signup">Get Started</Link>
+                    <Link href="/auth/signup">Get Started</Link>
                   </Button>
                 </>
               )}

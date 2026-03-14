@@ -28,7 +28,7 @@ export function Footer() {
             How It Works
           </Link>
           <Link
-            href="/login"
+            href="/auth/login"
             className="text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             Log In

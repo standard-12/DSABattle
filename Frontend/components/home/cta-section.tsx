@@ -22,7 +22,7 @@ export function CTASection() {
             asChild
             className="gap-2 px-8 text-base font-semibold"
           >
-            <Link href="/signup">
+            <Link href="/auth/signup">
               <Swords className="size-5" />
               Start Your First Battle
             </Link>

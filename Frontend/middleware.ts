@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
 
 const protectedRoutes = ["/dashboard", "/battle", "/profile"];
-const authRoutes = ["/login", "/signup"];
+const authRoutes = ["/auth/login", "/auth/signup"];
 
 function isProtectedRoute(pathname: string) {
   return protectedRoutes.some(
@@ -34,7 +34,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   const pathname = request.nextUrl.pathname;
 
   if (!user && isProtectedRoute(pathname)) {
-    return redirectTo(request, response, "/login");
+    return redirectTo(request, response, "/auth/login");
   }
 
   if (!user) {

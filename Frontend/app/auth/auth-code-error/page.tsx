@@ -20,10 +20,10 @@ export default function AuthCodeErrorPage() {
         </CardHeader>
         <CardFooter className="flex justify-center gap-4">
           <Button asChild variant="outline">
-            <Link href="/signup">Go to Signup</Link>
+            <Link href="/auth/signup">Go to Signup</Link>
           </Button>
           <Button asChild>
-            <Link href="/login">Go to Login</Link>
+            <Link href="/auth/login">Go to Login</Link>
           </Button>
         </CardFooter>
       </Card>

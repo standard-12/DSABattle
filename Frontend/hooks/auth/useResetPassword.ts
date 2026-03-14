@@ -36,7 +36,7 @@ export function useResetPassword() {
         }
 
         setSuccessMessage("Password updated successfully. Redirecting to login…")
-        router.replace("/login")
+        router.replace("/auth/login")
       } catch {
         setErrorMessage("Unable to update password. Please try again.")
       } finally {

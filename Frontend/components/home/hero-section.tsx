@@ -36,7 +36,7 @@ export function HeroSection() {
         {/* CTAs */}
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
           <Button size="lg" asChild className="gap-2 px-8 text-base font-semibold">
-            <Link href="/signup">
+            <Link href="/auth/signup">
               <Swords className="size-5" />
               Start Battle
             </Link>

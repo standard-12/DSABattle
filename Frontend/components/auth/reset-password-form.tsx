@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Swords, Eye, EyeOff, Lock } from "lucide-react"
-import { useResetPassword } from "@/hooks/useResetPassword"
+import { useResetPassword } from "@/hooks/auth/useResetPassword"
 
 export function ResetPasswordForm() {
   const [showPassword, setShowPassword] = useState(false)
@@ -172,7 +172,7 @@ export function ResetPasswordForm() {
           {/* Back to login */}
           <p className="mt-6 text-center text-sm text-muted-foreground">
             <Link
-              href="/login"
+              href="/auth/login"
               className="font-medium text-primary transition-colors hover:text-primary/80"
             >
               Back to login
