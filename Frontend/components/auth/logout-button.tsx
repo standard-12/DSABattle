@@ -2,7 +2,7 @@
 
 import { LogOut, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useLogout } from "@/hooks/useLogout"
+import { useLogout } from "@/hooks/auth/useLogout"
 
 interface LogoutButtonProps {
     /** Use "ghost" for navbar placement, "outline" for standalone, etc. */

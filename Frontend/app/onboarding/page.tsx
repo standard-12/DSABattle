@@ -26,7 +26,7 @@ export default async function OnboardingPage({ searchParams }: OnboardingPagePro
   } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect("/login")
+    redirect("/auth/login")
   }
 
   async function createProfile(formData: FormData) {
@@ -38,7 +38,7 @@ export default async function OnboardingPage({ searchParams }: OnboardingPagePro
     } = await supabase.auth.getUser()
 
     if (!user) {
-      redirect("/login")
+      redirect("/auth/login")
     }
 
     const username = String(formData.get("username") ?? "").trim()

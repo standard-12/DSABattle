@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Swords, Eye, EyeOff, Mail, Lock, Github } from "lucide-react"
-import { useSignup } from "@/hooks/useSignup"
+import { useSignup } from "@/hooks/auth/useSignup"
 
 export function SignupForm() {
   const [showPassword, setShowPassword] = useState(false)
@@ -249,7 +249,7 @@ export function SignupForm() {
           <p className="mt-6 text-center text-sm text-muted-foreground">
             {"Already have an account? "}
             <Link
-              href="/login"
+              href="/auth/login"
               className="font-medium text-primary transition-colors hover:text-primary/80"
             >
               Log in
