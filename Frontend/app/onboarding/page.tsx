@@ -59,6 +59,13 @@ export default async function OnboardingPage({ searchParams }: OnboardingPagePro
     )
 
     if (error) {
+      console.error("Profile upsert failed", {
+        message: error.message,
+        code: error.code,
+        details: error.details,
+        hint: error.hint,
+      })
+
       if (error.code === "23505") {
         redirect("/onboarding?error=username_exists")
       }
