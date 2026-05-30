@@ -1,0 +1,41 @@
+{
+  "title": "Two Sum",
+  "slug": "two-sum",
+  "difficulty": "EASY",
+  "categories": [
+    "Array",
+    "Hash Table"
+  ],
+  "description": "Given an array of integers nums and an integer target, print the indices of the two numbers such that they add up to target.\n\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\n\nYou can print the answer in any order.\n\nFollow-up: Can you come up with an algorithm that is less than O(n^2) time complexity?",
+  "input_format": [
+    "Line 1: Integer n",
+    "Line 2: n space-separated integers",
+    "Line 3: Integer target"
+  ],
+  "output_format": [
+    "Print the two indices separated by a space"
+  ],
+  "constraints": [
+    "2 <= nums.length <= 10^4",
+    "-10^9 <= nums[i] <= 10^9",
+    "-10^9 <= target <= 10^9",
+    "Only one valid answer exists."
+  ],
+  "examples": [
+    {
+      "input": "4\n2 7 11 15\n9",
+      "output": "0 1",
+      "explanation": "nums[0] + nums[1] = 9"
+    },
+    {
+      "input": "3\n3 2 4\n6",
+      "output": "1 2",
+      "explanation": ""
+    },
+    {
+      "input": "2\n3 3\n6",
+      "output": "0 1",
+      "explanation": ""
+    }
+  ]
+}

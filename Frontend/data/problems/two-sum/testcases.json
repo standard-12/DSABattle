@@ -1,0 +1,28 @@
+{
+  "test_cases": [
+    {
+      "input": "4\n2 7 11 15\n9",
+      "expected_output": "0 1",
+      "display_input": "nums = [2,7,11,15], target = 9",
+      "display_output": "[0,1]",
+      "visibility": "PUBLIC",
+      "order": 1
+    },
+    {
+      "input": "3\n3 2 4\n6",
+      "expected_output": "1 2",
+      "display_input": "nums = [3,2,4], target = 6",
+      "display_output": "[1,2]",
+      "visibility": "PUBLIC",
+      "order": 2
+    },
+    {
+      "input": "2\n3 3\n6",
+      "expected_output": "0 1",
+      "display_input": "nums = [3,3], target = 6",
+      "display_output": "[0,1]",
+      "visibility": "PUBLIC",
+      "order": 3
+    }
+  ]
+}
