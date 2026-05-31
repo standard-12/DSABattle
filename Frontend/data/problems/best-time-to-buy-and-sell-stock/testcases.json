@@ -1,0 +1,796 @@
+{
+  "test_cases": [
+    {
+      "input": "4\n10 9 8 2",
+      "expected_output": "0",
+      "display_input": "prices = [10,9,8,2]",
+      "display_output": "0",
+      "visibility": "PUBLIC",
+      "order": 1
+    },
+    {
+      "input": "1\n1",
+      "expected_output": "0",
+      "display_input": "prices = [1]",
+      "display_output": "0",
+      "visibility": "PUBLIC",
+      "order": 2
+    },
+    {
+      "input": "7\n2 1 2 1 0 1 2",
+      "expected_output": "2",
+      "display_input": "prices = [2,1,2,1,0,1,2]",
+      "display_output": "2",
+      "visibility": "PUBLIC",
+      "order": 3
+    },
+    {
+      "input": "2\n2 1",
+      "expected_output": "0",
+      "display_input": "prices = [2,1]",
+      "display_output": "0",
+      "visibility": "PRIVATE",
+      "order": 4
+    },
+    {
+      "input": "5\n7 6 4 3 1",
+      "expected_output": "0",
+      "display_input": "prices = [7,6,4,3,1]",
+      "display_output": "0",
+      "visibility": "PRIVATE",
+      "order": 5
+    },
+    {
+      "input": "8\n3 3 5 0 0 3 1 4",
+      "expected_output": "4",
+      "display_input": "prices = [3,3,5,0,0,3,1,4]",
+      "display_output": "4",
+      "visibility": "PRIVATE",
+      "order": 6
+    },
+    {
+      "input": "6\n7 1 5 3 6 4",
+      "expected_output": "5",
+      "display_input": "prices = [7,1,5,3,6,4]",
+      "display_output": "5",
+      "visibility": "PRIVATE",
+      "order": 7
+    },
+    {
+      "input": "5\n1 2 3 4 5",
+      "expected_output": "4",
+      "display_input": "prices = [1,2,3,4,5]",
+      "display_output": "4",
+      "visibility": "PRIVATE",
+      "order": 8
+    },
+    {
+      "input": "2\n1 2",
+      "expected_output": "1",
+      "display_input": "prices = [1,2]",
+      "display_output": "1",
+      "visibility": "PRIVATE",
+      "order": 9
+    },
+    {
+      "input": "15\n8 9 7 9 8 7 9 10 7 9 8 10 11 10 12",
+      "expected_output": "5",
+      "display_input": "prices = [8,9,7,9,8,7,9,10,7,9,8,10,11,10,12]",
+      "display_output": "5",
+      "visibility": "PRIVATE",
+      "order": 10
+    },
+    {
+      "input": "15\n1 2 3 2 1 4 3 2 1 5 4 3 2 1 6",
+      "expected_output": "5",
+      "display_input": "prices = [1,2,3,2,1,4,3,2,1,5,4,3,2,1,6]",
+      "display_output": "5",
+      "visibility": "PRIVATE",
+      "order": 11
+    },
+    {
+      "input": "12\n7 1 5 3 6 4 1 2 3 8 2 10",
+      "expected_output": "9",
+      "display_input": "prices = [7,1,5,3,6,4,1,2,3,8,2,10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 12
+    },
+    {
+      "input": "10\n1 1 1 1 1 1 1 1 1 1",
+      "expected_output": "0",
+      "display_input": "prices = [1,1,1,1,1,1,1,1,1,1]",
+      "display_output": "0",
+      "visibility": "PRIVATE",
+      "order": 13
+    },
+    {
+      "input": "10\n8 6 7 3 3 5 1 0 6 5",
+      "expected_output": "6",
+      "display_input": "prices = [8,6,7,3,3,5,1,0,6,5]",
+      "display_output": "6",
+      "visibility": "PRIVATE",
+      "order": 14
+    },
+    {
+      "input": "11\n1 5 3 8 12 10 9 15 18 5 7",
+      "expected_output": "17",
+      "display_input": "prices = [1,5,3,8,12,10,9,15,18,5,7]",
+      "display_output": "17",
+      "visibility": "PRIVATE",
+      "order": 15
+    },
+    {
+      "input": "40\n3 2 6 5 0 3 1 5 3 7 10 4 8 12 6 14 2 18 9 20 1 22 10 24 5 26 11 28 12 30 13 32 14 34 15 36 16 38 17 40",
+      "expected_output": "40",
+      "display_input": "prices = [3,2,6,5,0,3,1,5,3,7,10,4,8,12,6,14,2,18,9,20,1,22,10,24,5,26,11,28,12,30,13,32,14,34,15,36,16,38,17,40]",
+      "display_output": "40",
+      "visibility": "PRIVATE",
+      "order": 16
+    },
+    {
+      "input": "15\n8 3 6 2 8 8 8 4 2 0 9 5 7 6 2",
+      "expected_output": "9",
+      "display_input": "prices = [8,3,6,2,8,8,8,4,2,0,9,5,7,6,2]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 17
+    },
+    {
+      "input": "18\n4 1 2 3 5 6 1 2 3 1 5 6 7 8 1 2 3 1",
+      "expected_output": "7",
+      "display_input": "prices = [4,1,2,3,5,6,1,2,3,1,5,6,7,8,1,2,3,1]",
+      "display_output": "7",
+      "visibility": "PRIVATE",
+      "order": 18
+    },
+    {
+      "input": "16\n897 456 680 509 535 695 890 456 509 535 695 890 456 509 535 695",
+      "expected_output": "434",
+      "display_input": "prices = [897,456,680,509,535,695,890,456,509,535,695,890,456,509,535,695]",
+      "display_output": "434",
+      "visibility": "PRIVATE",
+      "order": 19
+    },
+    {
+      "input": "30\n1 2 3 4 5 6 7 8 9 10 9 8 7 6 5 4 3 2 1 0 1 2 3 4 5 6 7 8 9 10",
+      "expected_output": "10",
+      "display_input": "prices = [1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,0,1,2,3,4,5,6,7,8,9,10]",
+      "display_output": "10",
+      "visibility": "PRIVATE",
+      "order": 20
+    },
+    {
+      "input": "9\n100 180 260 40 310 535 695 10 1",
+      "expected_output": "655",
+      "display_input": "prices = [100, 180, 260, 40, 310, 535, 695, 10, 1]",
+      "display_output": "655",
+      "visibility": "PRIVATE",
+      "order": 21
+    },
+    {
+      "input": "32\n1 2 3 4 5 6 7 8 9 10 10 9 8 7 6 5 4 3 2 1 0 0 1 2 3 4 5 6 7 8 9 10",
+      "expected_output": "10",
+      "display_input": "prices = [1,2,3,4,5,6,7,8,9,10,10,9,8,7,6,5,4,3,2,1,0,0,1,2,3,4,5,6,7,8,9,10]",
+      "display_output": "10",
+      "visibility": "PRIVATE",
+      "order": 22
+    },
+    {
+      "input": "6\n100 90 80 50 20 10",
+      "expected_output": "0",
+      "display_input": "prices = [100,90,80,50,20,10]",
+      "display_output": "0",
+      "visibility": "PRIVATE",
+      "order": 23
+    },
+    {
+      "input": "22\n1 2 3 2 3 4 2 3 4 5 3 4 5 6 4 5 6 7 5 6 7 8",
+      "expected_output": "7",
+      "display_input": "prices = [1,2,3,2,3,4,2,3,4,5,3,4,5,6,4,5,6,7,5,6,7,8]",
+      "display_output": "7",
+      "visibility": "PRIVATE",
+      "order": 24
+    },
+    {
+      "input": "6\n3 2 6 5 0 3",
+      "expected_output": "4",
+      "display_input": "prices = [3,2,6,5,0,3]",
+      "display_output": "4",
+      "visibility": "PRIVATE",
+      "order": 25
+    },
+    {
+      "input": "7\n100 180 260 40 310 535 695",
+      "expected_output": "655",
+      "display_input": "prices = [100,180,260,40,310,535,695]",
+      "display_output": "655",
+      "visibility": "PRIVATE",
+      "order": 26
+    },
+    {
+      "input": "10\n1 9 2 8 3 7 4 6 5 10",
+      "expected_output": "9",
+      "display_input": "prices = [1,9,2,8,3,7,4,6,5,10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 27
+    },
+    {
+      "input": "21\n1 9 6 9 1 7 1 1 5 9 9 9 8 9 8 9 10 9 8 9 10",
+      "expected_output": "9",
+      "display_input": "prices = [1,9,6,9,1,7,1,1,5,9,9,9,8,9,8,9,10,9,8,9,10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 28
+    },
+    {
+      "input": "10\n1 2 4 2 5 7 2 4 9 0",
+      "expected_output": "8",
+      "display_input": "prices = [1,2,4,2,5,7,2,4,9,0]",
+      "display_output": "8",
+      "visibility": "PRIVATE",
+      "order": 29
+    },
+    {
+      "input": "11\n10 9 8 7 6 5 4 3 2 1 0",
+      "expected_output": "0",
+      "display_input": "prices = [10,9,8,7,6,5,4,3,2,1,0]",
+      "display_output": "0",
+      "visibility": "PRIVATE",
+      "order": 30
+    },
+    {
+      "input": "10\n8 6 4 6 8 9 3 4 5 1",
+      "expected_output": "5",
+      "display_input": "prices = [8,6,4,6,8,9,3,4,5,1]",
+      "display_output": "5",
+      "visibility": "PRIVATE",
+      "order": 31
+    },
+    {
+      "input": "10\n7 1 5 3 6 4 10 2 8 15",
+      "expected_output": "14",
+      "display_input": "prices = [7, 1, 5, 3, 6, 4, 10, 2, 8, 15]",
+      "display_output": "14",
+      "visibility": "PRIVATE",
+      "order": 32
+    },
+    {
+      "input": "10\n5 2 3 4 1 6 8 7 8 9",
+      "expected_output": "8",
+      "display_input": "prices = [5,2,3,4,1,6,8,7,8,9]",
+      "display_output": "8",
+      "visibility": "PRIVATE",
+      "order": 33
+    },
+    {
+      "input": "7\n100 180 260 310 40 535 695",
+      "expected_output": "655",
+      "display_input": "prices = [100,180,260,310,40,535,695]",
+      "display_output": "655",
+      "visibility": "PRIVATE",
+      "order": 34
+    },
+    {
+      "input": "24\n1 10 1 10 1 10 1 10 1 10 1 10 1 10 1 10 1 10 1 10 1 10 1 10",
+      "expected_output": "9",
+      "display_input": "prices = [1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 35
+    },
+    {
+      "input": "10\n10 10 10 5 5 5 10 10 15 15",
+      "expected_output": "10",
+      "display_input": "prices = [10,10,10,5,5,5,10,10,15,15]",
+      "display_output": "10",
+      "visibility": "PRIVATE",
+      "order": 36
+    },
+    {
+      "input": "10\n8 5 12 9 19 1 7 17 3 18",
+      "expected_output": "17",
+      "display_input": "prices = [8, 5, 12, 9, 19, 1, 7, 17, 3, 18]",
+      "display_output": "17",
+      "visibility": "PRIVATE",
+      "order": 37
+    },
+    {
+      "input": "18\n30 15 50 10 60 35 100 40 90 50 120 60 130 70 140 80 150 90",
+      "expected_output": "140",
+      "display_input": "prices = [30,15,50,10,60,35,100,40,90,50,120,60,130,70,140,80,150,90]",
+      "display_output": "140",
+      "visibility": "PRIVATE",
+      "order": 38
+    },
+    {
+      "input": "10\n10 9 8 7 6 5 4 3 2 1",
+      "expected_output": "0",
+      "display_input": "prices = [10,9,8,7,6,5,4,3,2,1]",
+      "display_output": "0",
+      "visibility": "PRIVATE",
+      "order": 39
+    },
+    {
+      "input": "21\n50 20 30 10 50 20 30 10 50 20 30 10 50 20 30 10 50 20 30 10 50",
+      "expected_output": "40",
+      "display_input": "prices = [50,20,30,10,50,20,30,10,50,20,30,10,50,20,30,10,50,20,30,10,50]",
+      "display_output": "40",
+      "visibility": "PRIVATE",
+      "order": 40
+    },
+    {
+      "input": "30\n1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2",
+      "expected_output": "1",
+      "display_input": "prices = [1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2]",
+      "display_output": "1",
+      "visibility": "PRIVATE",
+      "order": 41
+    },
+    {
+      "input": "9\n8 4 6 2 3 10 14 11 13",
+      "expected_output": "12",
+      "display_input": "prices = [8,4,6,2,3,10,14,11,13]",
+      "display_output": "12",
+      "visibility": "PRIVATE",
+      "order": 42
+    },
+    {
+      "input": "10\n100 90 80 70 60 50 40 30 20 10",
+      "expected_output": "0",
+      "display_input": "prices = [100,90,80,70,60,50,40,30,20,10]",
+      "display_output": "0",
+      "visibility": "PRIVATE",
+      "order": 43
+    },
+    {
+      "input": "30\n1 5 3 7 10 4 8 12 6 14 2 18 9 20 1 22 10 24 5 26 11 28 12 30 13 32 14 34 15 36",
+      "expected_output": "35",
+      "display_input": "prices = [1,5,3,7,10,4,8,12,6,14,2,18,9,20,1,22,10,24,5,26,11,28,12,30,13,32,14,34,15,36]",
+      "display_output": "35",
+      "visibility": "PRIVATE",
+      "order": 44
+    },
+    {
+      "input": "14\n5 4 3 2 1 2 3 4 5 6 7 8 9 10",
+      "expected_output": "9",
+      "display_input": "prices = [5,4,3,2,1,2,3,4,5,6,7,8,9,10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 45
+    },
+    {
+      "input": "11\n10 9 8 7 6 5 4 3 2 1 0",
+      "expected_output": "0",
+      "display_input": "prices = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]",
+      "display_output": "0",
+      "visibility": "PRIVATE",
+      "order": 46
+    },
+    {
+      "input": "14\n7 1 5 3 6 4 8 9 2 1 5 6 3 10",
+      "expected_output": "9",
+      "display_input": "prices = [7,1,5,3,6,4,8,9,2,1,5,6,3,10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 47
+    },
+    {
+      "input": "14\n10 20 10 20 10 20 10 20 10 20 10 20 10 20",
+      "expected_output": "10",
+      "display_input": "prices = [10,20,10,20,10,20,10,20,10,20,10,20,10,20]",
+      "display_output": "10",
+      "visibility": "PRIVATE",
+      "order": 48
+    },
+    {
+      "input": "10\n1 3 2 5 7 11 8 12 14 15",
+      "expected_output": "14",
+      "display_input": "prices = [1,3,2,5,7,11,8,12,14,15]",
+      "display_output": "14",
+      "visibility": "PRIVATE",
+      "order": 49
+    },
+    {
+      "input": "15\n1 2 3 2 1 2 3 2 1 2 3 2 1 2 3",
+      "expected_output": "2",
+      "display_input": "prices = [1,2,3,2,1,2,3,2,1,2,3,2,1,2,3]",
+      "display_output": "2",
+      "visibility": "PRIVATE",
+      "order": 50
+    },
+    {
+      "input": "19\n10 1 1 6 9 1 2 1 8 1 2 3 4 5 6 7 8 9 10",
+      "expected_output": "9",
+      "display_input": "prices = [10,1,1,6,9,1,2,1,8,1,2,3,4,5,6,7,8,9,10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 51
+    },
+    {
+      "input": "11\n1 5 3 8 12 7 9 2 3 15 10",
+      "expected_output": "14",
+      "display_input": "prices = [1, 5, 3, 8, 12, 7, 9, 2, 3, 15, 10]",
+      "display_output": "14",
+      "visibility": "PRIVATE",
+      "order": 52
+    },
+    {
+      "input": "10\n8 6 7 8 4 9 1 9 4 5",
+      "expected_output": "8",
+      "display_input": "prices = [8,6,7,8,4,9,1,9,4,5]",
+      "display_output": "8",
+      "visibility": "PRIVATE",
+      "order": 53
+    },
+    {
+      "input": "18\n1 2 3 4 5 4 3 2 1 2 3 4 5 6 7 8 9 10",
+      "expected_output": "9",
+      "display_input": "prices = [1,2,3,4,5,4,3,2,1,2,3,4,5,6,7,8,9,10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 54
+    },
+    {
+      "input": "11\n1 2 1 3 1 2 3 1 2 3 4",
+      "expected_output": "3",
+      "display_input": "prices = [1,2,1,3,1,2,3,1,2,3,4]",
+      "display_output": "3",
+      "visibility": "PRIVATE",
+      "order": 55
+    },
+    {
+      "input": "11\n5 2 3 0 3 1 6 2 8 3 4",
+      "expected_output": "8",
+      "display_input": "prices = [5,2,3,0,3,1,6,2,8,3,4]",
+      "display_output": "8",
+      "visibility": "PRIVATE",
+      "order": 56
+    },
+    {
+      "input": "16\n7 1 5 3 6 4 10 2 3 4 5 6 7 8 9 1",
+      "expected_output": "9",
+      "display_input": "prices = [7,1,5,3,6,4,10,2,3,4,5,6,7,8,9,1]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 57
+    },
+    {
+      "input": "16\n7 1 5 3 6 4 1 2 3 4 5 6 7 8 9 10",
+      "expected_output": "9",
+      "display_input": "prices = [7,1,5,3,6,4,1,2,3,4,5,6,7,8,9,10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 58
+    },
+    {
+      "input": "16\n1 5 3 6 7 10 1 2 3 4 5 6 7 8 9 10",
+      "expected_output": "9",
+      "display_input": "prices = [1,5,3,6,7,10,1,2,3,4,5,6,7,8,9,10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 59
+    },
+    {
+      "input": "16\n10 1 1 1 10 1 1 1 10 1 1 1 10 1 1 1",
+      "expected_output": "9",
+      "display_input": "prices = [10,1,1,1,10,1,1,1,10,1,1,1,10,1,1,1]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 60
+    },
+    {
+      "input": "10\n1 9 1 9 1 9 1 9 1 9",
+      "expected_output": "8",
+      "display_input": "prices = [1,9,1,9,1,9,1,9,1,9]",
+      "display_output": "8",
+      "visibility": "PRIVATE",
+      "order": 61
+    },
+    {
+      "input": "16\n100 200 300 100 150 200 250 100 150 200 250 300 100 150 200 250",
+      "expected_output": "200",
+      "display_input": "prices = [100,200,300,100,150,200,250,100,150,200,250,300,100,150,200,250]",
+      "display_output": "200",
+      "visibility": "PRIVATE",
+      "order": 62
+    },
+    {
+      "input": "20\n1 3 2 8 4 9 3 5 2 10 1 3 7 2 4 9 1 6 3 5",
+      "expected_output": "9",
+      "display_input": "prices = [1,3,2,8,4,9,3,5,2,10,1,3,7,2,4,9,1,6,3,5]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 63
+    },
+    {
+      "input": "10\n1 9 18 2 7 21 12 17 6 19",
+      "expected_output": "20",
+      "display_input": "prices = [1,9,18,2,7,21,12,17,6,19]",
+      "display_output": "20",
+      "visibility": "PRIVATE",
+      "order": 64
+    },
+    {
+      "input": "15\n1 3 1 3 1 3 1 3 1 3 1 3 1 3 1",
+      "expected_output": "2",
+      "display_input": "prices = [1,3,1,3,1,3,1,3,1,3,1,3,1,3,1]",
+      "display_output": "2",
+      "visibility": "PRIVATE",
+      "order": 65
+    },
+    {
+      "input": "28\n10 9 8 7 6 5 4 3 2 1 2 3 4 5 6 7 8 9 10 9 8 7 6 5 4 3 2 1",
+      "expected_output": "9",
+      "display_input": "prices = [10,9,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 66
+    },
+    {
+      "input": "12\n5 11 3 50 60 90 70 80 65 30 55 95",
+      "expected_output": "92",
+      "display_input": "prices = [5,11,3,50,60,90,70,80,65,30,55,95]",
+      "display_output": "92",
+      "visibility": "PRIVATE",
+      "order": 67
+    },
+    {
+      "input": "10\n1 2 3 4 5 6 7 8 9 10",
+      "expected_output": "9",
+      "display_input": "prices = [1,2,3,4,5,6,7,8,9,10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 68
+    },
+    {
+      "input": "15\n8 6 4 3 3 5 10 0 6 2 9 10 4 7 1",
+      "expected_output": "10",
+      "display_input": "prices = [8,6,4,3,3,5,10,0,6,2,9,10,4,7,1]",
+      "display_output": "10",
+      "visibility": "PRIVATE",
+      "order": 69
+    },
+    {
+      "input": "15\n1 2 3 4 1 2 3 4 5 6 1 2 3 4 5",
+      "expected_output": "5",
+      "display_input": "prices = [1,2,3,4,1,2,3,4,5,6,1,2,3,4,5]",
+      "display_output": "5",
+      "visibility": "PRIVATE",
+      "order": 70
+    },
+    {
+      "input": "15\n1 1 1 1 1 1 1 1 1 1 1 1 1 1 1",
+      "expected_output": "0",
+      "display_input": "prices = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "display_output": "0",
+      "visibility": "PRIVATE",
+      "order": 71
+    },
+    {
+      "input": "13\n2 2 5 11 1 3 4 11 1 2 11 3 4",
+      "expected_output": "10",
+      "display_input": "prices = [2,2,5,11,1,3,4,11,1,2,11,3,4]",
+      "display_output": "10",
+      "visibility": "PRIVATE",
+      "order": 72
+    },
+    {
+      "input": "10\n1 7 2 9 4 6 3 8 5 10",
+      "expected_output": "9",
+      "display_input": "prices = [1,7,2,9,4,6,3,8,5,10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 73
+    },
+    {
+      "input": "10\n9 8 7 6 5 4 3 2 1 0",
+      "expected_output": "0",
+      "display_input": "prices = [9,8,7,6,5,4,3,2,1,0]",
+      "display_output": "0",
+      "visibility": "PRIVATE",
+      "order": 74
+    },
+    {
+      "input": "10\n1 2 2 2 2 2 2 2 2 2",
+      "expected_output": "1",
+      "display_input": "prices = [1,2,2,2,2,2,2,2,2,2]",
+      "display_output": "1",
+      "visibility": "PRIVATE",
+      "order": 75
+    },
+    {
+      "input": "6\n10 22 5 75 65 80",
+      "expected_output": "75",
+      "display_input": "prices = [10,22,5,75,65,80]",
+      "display_output": "75",
+      "visibility": "PRIVATE",
+      "order": 76
+    },
+    {
+      "input": "11\n1 2 4 2 5 7 2 4 9 0 9",
+      "expected_output": "9",
+      "display_input": "prices = [1,2,4,2,5,7,2,4,9,0,9]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 77
+    },
+    {
+      "input": "21\n1 9 6 9 2 8 7 1 9 4 9 2 3 8 1 6 5 8 1 1 5",
+      "expected_output": "8",
+      "display_input": "prices = [1,9,6,9,2,8,7,1,9,4,9,2,3,8,1,6,5,8,1,1,5]",
+      "display_output": "8",
+      "visibility": "PRIVATE",
+      "order": 78
+    },
+    {
+      "input": "12\n5 3 6 7 2 8 1 4 9 10 1 11",
+      "expected_output": "10",
+      "display_input": "prices = [5,3,6,7,2,8,1,4,9,10,1,11]",
+      "display_output": "10",
+      "visibility": "PRIVATE",
+      "order": 79
+    },
+    {
+      "input": "25\n5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5",
+      "expected_output": "0",
+      "display_input": "prices = [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]",
+      "display_output": "0",
+      "visibility": "PRIVATE",
+      "order": 80
+    },
+    {
+      "input": "19\n1 2 3 2 4 5 4 3 2 1 9 8 7 6 5 4 3 2 1",
+      "expected_output": "8",
+      "display_input": "prices = [1,2,3,2,4,5,4,3,2,1,9,8,7,6,5,4,3,2,1]",
+      "display_output": "8",
+      "visibility": "PRIVATE",
+      "order": 81
+    },
+    {
+      "input": "13\n1 9 6 9 1 7 1 1 5 9 9 9 8",
+      "expected_output": "8",
+      "display_input": "prices = [1,9,6,9,1,7,1,1,5,9,9,9,8]",
+      "display_output": "8",
+      "visibility": "PRIVATE",
+      "order": 82
+    },
+    {
+      "input": "12\n1 9 6 9 1 7 1 1 5 9 9 9",
+      "expected_output": "8",
+      "display_input": "prices = [1,9,6,9,1,7,1,1,5,9,9,9]",
+      "display_output": "8",
+      "visibility": "PRIVATE",
+      "order": 83
+    },
+    {
+      "input": "20\n5 2 6 1 9 12 9 12 12 1 5 3 3 5 2 8 10 9 1 2",
+      "expected_output": "11",
+      "display_input": "prices = [5,2,6,1,9,12,9,12,12,1,5,3,3,5,2,8,10,9,1,2]",
+      "display_output": "11",
+      "visibility": "PRIVATE",
+      "order": 84
+    },
+    {
+      "input": "20\n1 3 2 8 4 9 3 5 10 6 2 3 1 5 20 3 1 2 3 10",
+      "expected_output": "19",
+      "display_input": "prices = [1,3,2,8,4,9,3,5,10,6,2,3,1,5,20,3,1,2,3,10]",
+      "display_output": "19",
+      "visibility": "PRIVATE",
+      "order": 85
+    },
+    {
+      "input": "6\n10 7 5 8 11 9",
+      "expected_output": "6",
+      "display_input": "prices = [10,7,5,8,11,9]",
+      "display_output": "6",
+      "visibility": "PRIVATE",
+      "order": 86
+    },
+    {
+      "input": "26\n1 5 3 7 10 4 8 12 6 14 2 18 9 20 1 22 10 24 5 26 11 28 12 30 13 32",
+      "expected_output": "31",
+      "display_input": "prices = [1,5,3,7,10,4,8,12,6,14,2,18,9,20,1,22,10,24,5,26,11,28,12,30,13,32]",
+      "display_output": "31",
+      "visibility": "PRIVATE",
+      "order": 87
+    },
+    {
+      "input": "10\n1 2 3 4 5 6 7 8 9 10",
+      "expected_output": "9",
+      "display_input": "prices = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 88
+    },
+    {
+      "input": "8\n3 3 5 0 0 3 1 4",
+      "expected_output": "4",
+      "display_input": "prices = [3, 3, 5, 0, 0, 3, 1, 4]",
+      "display_output": "4",
+      "visibility": "PRIVATE",
+      "order": 89
+    },
+    {
+      "input": "30\n1 2 4 2 5 7 2 4 9 0 1 2 4 2 5 7 2 4 9 0 1 2 4 2 5 7 2 4 9 0",
+      "expected_output": "9",
+      "display_input": "prices = [1,2,4,2,5,7,2,4,9,0,1,2,4,2,5,7,2,4,9,0,1,2,4,2,5,7,2,4,9,0]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 90
+    },
+    {
+      "input": "20\n1 100 1 100 1 100 1 100 1 100 1 100 1 100 1 100 1 100 1 100",
+      "expected_output": "99",
+      "display_input": "prices = [1,100,1,100,1,100,1,100,1,100,1,100,1,100,1,100,1,100,1,100]",
+      "display_output": "99",
+      "visibility": "PRIVATE",
+      "order": 91
+    },
+    {
+      "input": "15\n1 2 3 0 1 2 3 0 1 2 3 0 1 2 3",
+      "expected_output": "3",
+      "display_input": "prices = [1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3]",
+      "display_output": "3",
+      "visibility": "PRIVATE",
+      "order": 92
+    },
+    {
+      "input": "20\n100 90 80 70 60 50 40 30 20 10 1 2 3 4 5 6 7 8 9 10",
+      "expected_output": "9",
+      "display_input": "prices = [100,90,80,70,60,50,40,30,20,10,1,2,3,4,5,6,7,8,9,10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 93
+    },
+    {
+      "input": "10\n5 9 1 6 2 8 3 7 4 10",
+      "expected_output": "9",
+      "display_input": "prices = [5,9,1,6,2,8,3,7,4,10]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 94
+    },
+    {
+      "input": "52\n5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5",
+      "expected_output": "0",
+      "display_input": "prices = [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]",
+      "display_output": "0",
+      "visibility": "PRIVATE",
+      "order": 95
+    },
+    {
+      "input": "24\n10 1 1 10 1 1 10 1 1 10 1 1 10 1 1 10 1 1 10 1 1 10 1 1",
+      "expected_output": "9",
+      "display_input": "prices = [10,1,1,10,1,1,10,1,1,10,1,1,10,1,1,10,1,1,10,1,1,10,1,1]",
+      "display_output": "9",
+      "visibility": "PRIVATE",
+      "order": 96
+    },
+    {
+      "input": "10\n310 310 275 275 260 260 260 230 230 230",
+      "expected_output": "0",
+      "display_input": "prices = [310,310,275,275,260,260,260,230,230,230]",
+      "display_output": "0",
+      "visibility": "PRIVATE",
+      "order": 97
+    },
+    {
+      "input": "10\n1 2 4 2 5 7 2 4 9 0",
+      "expected_output": "8",
+      "display_input": "prices = [1, 2, 4, 2, 5, 7, 2, 4, 9, 0]",
+      "display_output": "8",
+      "visibility": "PRIVATE",
+      "order": 98
+    },
+    {
+      "input": "10\n1 3 2 4 7 5 8 11 9 13",
+      "expected_output": "12",
+      "display_input": "prices = [1, 3, 2, 4, 7, 5, 8, 11, 9, 13]",
+      "display_output": "12",
+      "visibility": "PRIVATE",
+      "order": 99
+    }
+  ]
+}

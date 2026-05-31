@@ -1,0 +1,1188 @@
+{
+  "test_cases": [
+    {
+      "input": "((((((()))))))",
+      "expected_output": "true",
+      "display_input": "s = \"((((((()))))))\"",
+      "display_output": "True",
+      "visibility": "PUBLIC",
+      "order": 1
+    },
+    {
+      "input": "{[()]}",
+      "expected_output": "true",
+      "display_input": "s = \"{[()]}\"",
+      "display_output": "True",
+      "visibility": "PUBLIC",
+      "order": 2
+    },
+    {
+      "input": "[[[[[[{{{{}}}}]]]]]]",
+      "expected_output": "true",
+      "display_input": "s = \"[[[[[[{{{{}}}}]]]]]]\"",
+      "display_output": "True",
+      "visibility": "PUBLIC",
+      "order": 3
+    },
+    {
+      "input": "({[(])})",
+      "expected_output": "false",
+      "display_input": "s = \"({[(])})\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 4
+    },
+    {
+      "input": "([)]",
+      "expected_output": "false",
+      "display_input": "s = \"([)]\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 5
+    },
+    {
+      "input": ")()()(",
+      "expected_output": "false",
+      "display_input": "s = \")()()(\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 6
+    },
+    {
+      "input": "({[({})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 7
+    },
+    {
+      "input": "",
+      "expected_output": "true",
+      "display_input": "s = \"\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 8
+    },
+    {
+      "input": "(]",
+      "expected_output": "false",
+      "display_input": "s = \"(]\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 9
+    },
+    {
+      "input": "{{{{{{}}}}}}",
+      "expected_output": "true",
+      "display_input": "s = \"{{{{{{}}}}}}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 10
+    },
+    {
+      "input": "{[(])}",
+      "expected_output": "false",
+      "display_input": "s = \"{[(])}\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 11
+    },
+    {
+      "input": "[[[[[[]]]]]]",
+      "expected_output": "true",
+      "display_input": "s = \"[[[[[[]]]]]]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 12
+    },
+    {
+      "input": "[({})]",
+      "expected_output": "true",
+      "display_input": "s = \"[({})]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 13
+    },
+    {
+      "input": "()[]{}",
+      "expected_output": "true",
+      "display_input": "s = \"()[]{}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 14
+    },
+    {
+      "input": "([{}])",
+      "expected_output": "true",
+      "display_input": "s = \"([{}])\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 15
+    },
+    {
+      "input": "()",
+      "expected_output": "true",
+      "display_input": "s = \"()\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 16
+    },
+    {
+      "input": "((({{[[]]}})))",
+      "expected_output": "true",
+      "display_input": "s = \"((({{[[]]}})))\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 17
+    },
+    {
+      "input": "((()))",
+      "expected_output": "true",
+      "display_input": "s = \"((()))\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 18
+    },
+    {
+      "input": "([])",
+      "expected_output": "true",
+      "display_input": "s = \"([])\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 19
+    },
+    {
+      "input": "({[{}]}){([{}])}",
+      "expected_output": "true",
+      "display_input": "s = \"({[{}]}){([{}])}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 20
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}()({})[({})]({})()()[({})]",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}()({})[({})]({})()()[({})]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 21
+    },
+    {
+      "input": "[[[[[[[[]]]]]]]]",
+      "expected_output": "true",
+      "display_input": "s = \"[[[[[[[[]]]]]]]]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 22
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]()",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]()\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 23
+    },
+    {
+      "input": "({[()]})({[()]})({[()]})({[()]})({[()]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[()]})({[()]})({[()]})({[()]})({[()]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 24
+    },
+    {
+      "input": "[[[[]]]]",
+      "expected_output": "true",
+      "display_input": "s = \"[[[[]]]]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 25
+    },
+    {
+      "input": "([{}])({[()]})",
+      "expected_output": "true",
+      "display_input": "s = \"([{}])({[()]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 26
+    },
+    {
+      "input": "({[([{([{}])()]})]})",
+      "expected_output": "false",
+      "display_input": "s = \"({[([{([{}])()]})]})\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 27
+    },
+    {
+      "input": "([])({})[]{}",
+      "expected_output": "true",
+      "display_input": "s = \"([])({})[]{}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 28
+    },
+    {
+      "input": "({[([{}])()]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[([{}])()]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 29
+    },
+    {
+      "input": "({[({[({[({[({})]})]})]})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({})]})]})]})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 30
+    },
+    {
+      "input": "({[([{([{}])()]})]})()[]{}",
+      "expected_output": "false",
+      "display_input": "s = \"({[([{([{}])()]})]})()[]{}\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 31
+    },
+    {
+      "input": "({{{{{}}}}})",
+      "expected_output": "true",
+      "display_input": "s = \"({{{{{}}}}})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 32
+    },
+    {
+      "input": "(((((())))))",
+      "expected_output": "true",
+      "display_input": "s = \"(((((())))))\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 33
+    },
+    {
+      "input": "([({})])",
+      "expected_output": "true",
+      "display_input": "s = \"([({})])\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 34
+    },
+    {
+      "input": "({[()]})[({[()]})]",
+      "expected_output": "true",
+      "display_input": "s = \"({[()]})[({[()]})]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 35
+    },
+    {
+      "input": "({[({})]})({[{}]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({})]})({[{}]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 36
+    },
+    {
+      "input": "[({[({[({[]})]})]})]({[({[]})]})",
+      "expected_output": "true",
+      "display_input": "s = \"[({[({[({[]})]})]})]({[({[]})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 37
+    },
+    {
+      "input": "({[()({[()]})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[()({[()]})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 38
+    },
+    {
+      "input": "((((((((((((())))))))))))",
+      "expected_output": "false",
+      "display_input": "s = \"((((((((((((())))))))))))\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 39
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})()",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})()\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 40
+    },
+    {
+      "input": "({[([{}])()]}){([])}",
+      "expected_output": "true",
+      "display_input": "s = \"({[([{}])()]}){([])}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 41
+    },
+    {
+      "input": "({[([{}])()]})()",
+      "expected_output": "true",
+      "display_input": "s = \"({[([{}])()]})()\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 42
+    },
+    {
+      "input": "({[({[({[({[({[({})]})]})]})]})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[({})]})]})]})]})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 43
+    },
+    {
+      "input": "{}{}{}{}{}",
+      "expected_output": "true",
+      "display_input": "s = \"{}{}{}{}{}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 44
+    },
+    {
+      "input": "([({[({[()]})]})])",
+      "expected_output": "true",
+      "display_input": "s = \"([({[({[()]})]})])\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 45
+    },
+    {
+      "input": "{((({[({})]})()))}",
+      "expected_output": "true",
+      "display_input": "s = \"{((({[({})]})()))}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 46
+    },
+    {
+      "input": "[{()}]",
+      "expected_output": "true",
+      "display_input": "s = \"[{()}]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 47
+    },
+    {
+      "input": "(((((((({[({[({})]})]})()))))))",
+      "expected_output": "false",
+      "display_input": "s = \"(((((((({[({[({})]})]})()))))))\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 48
+    },
+    {
+      "input": "([({[({[({[({[]})]})]})]})])",
+      "expected_output": "true",
+      "display_input": "s = \"([({[({[({[({[]})]})]})]})])\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 49
+    },
+    {
+      "input": "({[({})]})({[({})]})({[({})]})({[({})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({})]})({[({})]})({[({})]})({[({})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 50
+    },
+    {
+      "input": "({[({[({[({[]})]})]})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[]})]})]})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 51
+    },
+    {
+      "input": "{{{{{{{{}}}}}}}}}",
+      "expected_output": "false",
+      "display_input": "s = \"{{{{{{{{}}}}}}}}}\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 52
+    },
+    {
+      "input": "((((((((()))))))))",
+      "expected_output": "true",
+      "display_input": "s = \"((((((((()))))))))\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 53
+    },
+    {
+      "input": "{((((((((({[({[({[({[({})]})]})]})]))))))}",
+      "expected_output": "false",
+      "display_input": "s = \"{((((((((({[({[({[({[({})]})]})]})]))))))}\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 54
+    },
+    {
+      "input": "{[({[({[({[]})]})]})]})({[({[({[({[]})]})]})]})({[({[({[]})]})]})({[({[({[]})]})]})({[({[({[]})]})]})({[({[({[]})]})]})",
+      "expected_output": "false",
+      "display_input": "s = \"{[({[({[({[]})]})]})]})({[({[({[({[]})]})]})]})({[({[({[]})]})]})({[({[({[]})]})]})({[({[({[]})]})]})({[({[({[]})]})]})\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 55
+    },
+    {
+      "input": "({[()({})({})({})({})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[()({})({})({})({})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 56
+    },
+    {
+      "input": "((({{{[[[()]]]}}})))",
+      "expected_output": "true",
+      "display_input": "s = \"((({{{[[[()]]]}}})))\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 57
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}()({})[({})]({})()()",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}()({})[({})]({})()()\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 58
+    },
+    {
+      "input": "({[({})]})({[({})]})({[({})]})({[({})]})({[({})]})({[({})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({})]})({[({})]})({[({})]})({[({})]})({[({})]})({[({})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 59
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 60
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}()({})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}()({})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 61
+    },
+    {
+      "input": "{([({[({[({[]})]})]})]})({[({[({[({[]})]})]})]})({[({[({[]})]})]})({[({[({[]})]})]})",
+      "expected_output": "false",
+      "display_input": "s = \"{([({[({[({[]})]})]})]})({[({[({[({[]})]})]})]})({[({[({[]})]})]})({[({[({[]})]})]})\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 62
+    },
+    {
+      "input": "{(((((((({[({[({})]})]})()))))))}",
+      "expected_output": "false",
+      "display_input": "s = \"{(((((((({[({[({})]})]})()))))))}\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 63
+    },
+    {
+      "input": "({[({[({[({[()]})]})]})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[()]})]})]})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 64
+    },
+    {
+      "input": "({[({})({})({})({})({})({})({})({})({})({})({})({})({})({})({})({})({})({})({})({})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({})({})({})({})({})({})({})({})({})({})({})({})({})({})({})({})({})({})({})({})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 65
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}()({})[({})]({})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}()({})[({})]({})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 66
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 67
+    },
+    {
+      "input": "({[({[({[({})]})]})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({})]})]})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 68
+    },
+    {
+      "input": "[({}){()}]",
+      "expected_output": "true",
+      "display_input": "s = \"[({}){()}]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 69
+    },
+    {
+      "input": "([{}])({[]})",
+      "expected_output": "true",
+      "display_input": "s = \"([{}])({[]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 70
+    },
+    {
+      "input": "[({})](())",
+      "expected_output": "true",
+      "display_input": "s = \"[({})](())\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 71
+    },
+    {
+      "input": "{[({})]}[({})]",
+      "expected_output": "true",
+      "display_input": "s = \"{[({})]}[({})]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 72
+    },
+    {
+      "input": "[[{{}}]]",
+      "expected_output": "true",
+      "display_input": "s = \"[[{{}}]]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 73
+    },
+    {
+      "input": "({[({})]})({[({})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({})]})({[({})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 74
+    },
+    {
+      "input": "({[({[({[()]}())]}())}())",
+      "expected_output": "false",
+      "display_input": "s = \"({[({[({[()]}())]}())}())\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 75
+    },
+    {
+      "input": "({[([{}])()]}){}",
+      "expected_output": "true",
+      "display_input": "s = \"({[([{}])()]}){}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 76
+    },
+    {
+      "input": "({[({})]})({[({})]})({[({})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({})]})({[({})]})({[({})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 77
+    },
+    {
+      "input": "{[(())[()]}",
+      "expected_output": "false",
+      "display_input": "s = \"{[(())[()]}\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 78
+    },
+    {
+      "input": "({[({})({})({})({})({})({})({})({})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({})({})({})({})({})({})({})({})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 79
+    },
+    {
+      "input": "((()))[({})]",
+      "expected_output": "true",
+      "display_input": "s = \"((()))[({})]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 80
+    },
+    {
+      "input": "({[({})]({})})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({})]({})})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 81
+    },
+    {
+      "input": "([])({[]}){([])}",
+      "expected_output": "true",
+      "display_input": "s = \"([])({[]}){([])}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 82
+    },
+    {
+      "input": "()()()()()()()()()()",
+      "expected_output": "true",
+      "display_input": "s = \"()()()()()()()()()()\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 83
+    },
+    {
+      "input": "((((((())))))){}[]",
+      "expected_output": "true",
+      "display_input": "s = \"((((((())))))){}[]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 84
+    },
+    {
+      "input": "{[()]}{[()]}",
+      "expected_output": "true",
+      "display_input": "s = \"{[()]}{[()]}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 85
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})()[]",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})()[]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 86
+    },
+    {
+      "input": "{({[({})]})}",
+      "expected_output": "true",
+      "display_input": "s = \"{({[({})]})}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 87
+    },
+    {
+      "input": "((({{{[[[]]]}}})))",
+      "expected_output": "true",
+      "display_input": "s = \"((({{{[[[]]]}}})))\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 88
+    },
+    {
+      "input": "({[([{([{}])()]})]})()[]{}{([])[()]}",
+      "expected_output": "false",
+      "display_input": "s = \"({[([{([{}])()]})]})()[]{}{([])[()]}\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 89
+    },
+    {
+      "input": "((({[({})]})({[({})]}))({[({})]})({[({})]})({[({})]})",
+      "expected_output": "false",
+      "display_input": "s = \"((({[({})]})({[({})]}))({[({})]})({[({})]})({[({})]})\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 90
+    },
+    {
+      "input": "({[({[({[()]}])}])})",
+      "expected_output": "false",
+      "display_input": "s = \"({[({[({[()]}])}])})\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 91
+    },
+    {
+      "input": "{{{{{{{{}}}}}}}}",
+      "expected_output": "true",
+      "display_input": "s = \"{{{{{{{{}}}}}}}}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 92
+    },
+    {
+      "input": "()()()()()()()",
+      "expected_output": "true",
+      "display_input": "s = \"()()()()()()()\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 93
+    },
+    {
+      "input": "({[()]})({[()]})({[()]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[()]})({[()]})({[()]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 94
+    },
+    {
+      "input": "{[()]({[()]})}",
+      "expected_output": "true",
+      "display_input": "s = \"{[()]({[()]})}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 95
+    },
+    {
+      "input": "({[({[({[({[]}]})]})]})",
+      "expected_output": "false",
+      "display_input": "s = \"({[({[({[({[]}]})]})]})\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 96
+    },
+    {
+      "input": "({[({[({})]})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({})]})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 97
+    },
+    {
+      "input": "({[()]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[()]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 98
+    },
+    {
+      "input": "({[(())]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[(())]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 99
+    },
+    {
+      "input": "({[()]}{[()]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[()]}{[()]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 100
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 101
+    },
+    {
+      "input": "([{}])((()))[{}]",
+      "expected_output": "true",
+      "display_input": "s = \"([{}])((()))[{}]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 102
+    },
+    {
+      "input": "{([({[({[({[]})]})]})]})({[({[({[]})]})]})",
+      "expected_output": "false",
+      "display_input": "s = \"{([({[({[({[]})]})]})]})({[({[({[]})]})]})\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 103
+    },
+    {
+      "input": "((({[({})]})()))",
+      "expected_output": "true",
+      "display_input": "s = \"((({[({})]})()))\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 104
+    },
+    {
+      "input": "[({})]({[()]})",
+      "expected_output": "true",
+      "display_input": "s = \"[({})]({[()]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 105
+    },
+    {
+      "input": "({[{({})}]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[{({})}]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 106
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 107
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 108
+    },
+    {
+      "input": "(((())))",
+      "expected_output": "true",
+      "display_input": "s = \"(((())))\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 109
+    },
+    {
+      "input": "({[([{([{}])()]})]})()[]{}{([])[()]}{({})}",
+      "expected_output": "false",
+      "display_input": "s = \"({[([{([{}])()]})]})()[]{}{([])[()]}{({})}\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 110
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}()({})[({})]({})()",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}()({})[({})]({})()\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 111
+    },
+    {
+      "input": "(((((((())))))",
+      "expected_output": "false",
+      "display_input": "s = \"(((((((())))))\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 112
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 113
+    },
+    {
+      "input": "()({})({[()]})",
+      "expected_output": "true",
+      "display_input": "s = \"()({})({[()]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 114
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 115
+    },
+    {
+      "input": "{{[[(())]]}}",
+      "expected_output": "true",
+      "display_input": "s = \"{{[[(())]]}}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 116
+    },
+    {
+      "input": "{[({[({[({[]})]})]})]})({[({[({[({[]})]})]})]})({[({[({[]})]})]})({[({[({[]})]})]})({[({[({[]})]})]})",
+      "expected_output": "false",
+      "display_input": "s = \"{[({[({[({[]})]})]})]})({[({[({[({[]})]})]})]})({[({[({[]})]})]})({[({[({[]})]})]})({[({[({[]})]})]})\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 117
+    },
+    {
+      "input": "({[({})]})({})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({})]})({})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 118
+    },
+    {
+      "input": "[({})]([])",
+      "expected_output": "true",
+      "display_input": "s = \"[({})]([])\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 119
+    },
+    {
+      "input": "({[([{}])()]}){([])[()]}",
+      "expected_output": "true",
+      "display_input": "s = \"({[([{}])()]}){([])[()]}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 120
+    },
+    {
+      "input": "({[([{}])()]})[]",
+      "expected_output": "true",
+      "display_input": "s = \"({[([{}])()]})[]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 121
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}()",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}()\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 122
+    },
+    {
+      "input": "({[({[({[({[]})]})]})]})({[({[({[]})]})]})({[({[({[]})]})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[]})]})]})]})({[({[({[]})]})]})({[({[({[]})]})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 123
+    },
+    {
+      "input": "([({})({})])",
+      "expected_output": "true",
+      "display_input": "s = \"([({})({})])\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 124
+    },
+    {
+      "input": "((((({{{[[[]]]}}}))))))",
+      "expected_output": "false",
+      "display_input": "s = \"((((({{{[[[]]]}}}))))))\"",
+      "display_output": "False",
+      "visibility": "PRIVATE",
+      "order": 125
+    },
+    {
+      "input": "[({[({})]})]",
+      "expected_output": "true",
+      "display_input": "s = \"[({[({})]})]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 126
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]()({})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]()({})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 127
+    },
+    {
+      "input": "[[[({})]]]",
+      "expected_output": "true",
+      "display_input": "s = \"[[[({})]]]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 128
+    },
+    {
+      "input": "({[]})({})({[]})({})",
+      "expected_output": "true",
+      "display_input": "s = \"({[]})({})({[]})({})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 129
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}()({})[({})]",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})(){}[]()({})[({})]({})()[]{}()({})[({})]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 130
+    },
+    {
+      "input": "((()))[{}]",
+      "expected_output": "true",
+      "display_input": "s = \"((()))[{}]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 131
+    },
+    {
+      "input": "(((((({[({[({})]})]})())))))",
+      "expected_output": "true",
+      "display_input": "s = \"(((((({[({[({})]})]})())))))\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 132
+    },
+    {
+      "input": "[[[[[[[]]]]]]]",
+      "expected_output": "true",
+      "display_input": "s = \"[[[[[[[]]]]]]]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 133
+    },
+    {
+      "input": "({[({})]})({[({})]})({[({})]})({[({})]})({[({})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({})]})({[({})]})({[({})]})({[({})]})({[({})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 134
+    },
+    {
+      "input": "((((({[({})]})()))))",
+      "expected_output": "true",
+      "display_input": "s = \"((((({[({})]})()))))\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 135
+    },
+    {
+      "input": "{[()]}{[()]}{[()]}",
+      "expected_output": "true",
+      "display_input": "s = \"{[()]}{[()]}{[()]}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 136
+    },
+    {
+      "input": "(){}[]{}[]{}",
+      "expected_output": "true",
+      "display_input": "s = \"(){}[]{}[]{}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 137
+    },
+    {
+      "input": "([{}])({[{}]})({[{}]})",
+      "expected_output": "true",
+      "display_input": "s = \"([{}])({[{}]})({[{}]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 138
+    },
+    {
+      "input": "{{{{}}}}",
+      "expected_output": "true",
+      "display_input": "s = \"{{{{}}}}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 139
+    },
+    {
+      "input": "[{()}]{[()]}",
+      "expected_output": "true",
+      "display_input": "s = \"[{()}]{[()]}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 140
+    },
+    {
+      "input": "({[()()]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[()()]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 141
+    },
+    {
+      "input": "()[]{}()[]{}",
+      "expected_output": "true",
+      "display_input": "s = \"()[]{}()[]{}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 142
+    },
+    {
+      "input": "({[()]})({[()]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[()]})({[()]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 143
+    },
+    {
+      "input": "({[({[({[({[({[]})]})]})]})]})",
+      "expected_output": "true",
+      "display_input": "s = \"({[({[({[({[({[]})]})]})]})]})\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 144
+    },
+    {
+      "input": "{[()]}({[()]}({[()]}))",
+      "expected_output": "true",
+      "display_input": "s = \"{[()]}({[()]}({[()]}))\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 145
+    },
+    {
+      "input": "((({{[[(())]]}})))",
+      "expected_output": "true",
+      "display_input": "s = \"((({{[[(())]]}})))\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 146
+    },
+    {
+      "input": "{(((((({[({[({})]})]})())))))}",
+      "expected_output": "true",
+      "display_input": "s = \"{(((((({[({[({})]})]})())))))}\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 147
+    },
+    {
+      "input": "[[{{(())}}]]",
+      "expected_output": "true",
+      "display_input": "s = \"[[{{(())}}]]\"",
+      "display_output": "True",
+      "visibility": "PRIVATE",
+      "order": 148
+    }
+  ]
+}

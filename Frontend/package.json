@@ -6,7 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "validate": "npx tsx scripts/validate/validateProblems.ts",
+    "validate:testcases": "npx tsx scripts/validate/validateTestcases.ts",
+    "validate:reference": "npx tsx scripts/validate/validateReferenceSolutions.ts",
+    "export:existing-problems": "npx tsx scripts/seed/exportExistingProblems.ts",
+    "generate:top-supported": "npx tsx scripts/generate/generateTopSupportedProblems.ts",
+    "discover:problems": "npx tsx scripts/discovery/discoverPatterns.ts",
+    "seed:problems": "npx tsx scripts/seed/seedProblems.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -45,6 +52,7 @@
     "clsx": "^2.1.1",
     "cmdk": "1.1.1",
     "date-fns": "4.1.0",
+    "dotenv": "^17.4.2",
     "embla-carousel-react": "8.6.0",
     "input-otp": "1.4.2",
     "lucide-react": "^0.564.0",

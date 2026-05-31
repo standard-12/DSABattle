@@ -1,0 +1,56 @@
+{
+  "generatedAt": "2026-05-31",
+  "source": "data/problems",
+  "currentProblems": [
+    {
+      "slug": "best-time-to-buy-and-sell-stock",
+      "title": "Best Time To Buy And Sell Stock",
+      "pattern": "ARRAY"
+    },
+    {
+      "slug": "binary-search",
+      "title": "Binary Search",
+      "pattern": "ARRAY_TARGET_INDEX"
+    },
+    {
+      "slug": "climbing-stairs",
+      "title": "Climbing Stairs",
+      "pattern": "INTEGER"
+    },
+    {
+      "slug": "contains-duplicate",
+      "title": "Contains Duplicate",
+      "pattern": "ARRAY"
+    },
+    {
+      "slug": "house-robber",
+      "title": "House Robber",
+      "pattern": "ARRAY"
+    },
+    {
+      "slug": "maximum-subarray",
+      "title": "Maximum Subarray",
+      "pattern": "ARRAY"
+    },
+    {
+      "slug": "running-sum-of-1d-array",
+      "title": "Running Sum Of 1d Array",
+      "pattern": "ARRAY"
+    },
+    {
+      "slug": "search-insert-position",
+      "title": "Search Insert Position",
+      "pattern": "ARRAY_TARGET_INDEX"
+    },
+    {
+      "slug": "two-sum",
+      "title": "Two Sum",
+      "pattern": "ARRAY_TARGET_PAIR"
+    },
+    {
+      "slug": "valid-parentheses",
+      "title": "Valid Parentheses",
+      "pattern": "STRING"
+    }
+  ]
+}
