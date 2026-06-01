@@ -1,0 +1,39 @@
+{
+  "title": "3sum",
+  "slug": "3sum",
+  "difficulty": "MEDIUM",
+  "categories": [
+    "Array",
+    "Two Pointers",
+    "Sorting"
+  ],
+  "description": "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.\nNotice that the solution set must not contain duplicate triplets.Print each triplet enclosed in brackets, separated by a space. You must sort the elements inside each triplet in ascending order. Furthermore, you must print the triplets sorted in lexicographical (ascending) order",
+  "input_format": [
+    "Line 1: Integer n",
+    "Line 2: n space-separated integers"
+  ],
+  "output_format": [
+    "Print the required answer"
+  ],
+  "constraints": [
+    "3 <= nums.length <= 3000",
+    "-10^5 <= nums[i] <= 10^5"
+  ],
+  "examples": [
+    {
+      "input": "6\n-1 0 1 2 -1 -4",
+      "output": "[-1 -1 2] [-1 0 1]",
+      "explanation": "nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.\nnums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.\nnums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.\nThe distinct triplets are [-1,0,1] and [-1,-1,2].\nNotice that the order of the output and the order of the triplets does not matter."
+    },
+    {
+      "input": "3\n0 1 1",
+      "output": "[]",
+      "explanation": "The only possible triplet does not sum up to 0."
+    },
+    {
+      "input": "3\n0 0 0",
+      "output": "[0 0 0]",
+      "explanation": "The only possible triplet sums up to 0."
+    }
+  ]
+}

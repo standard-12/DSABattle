@@ -96,7 +96,10 @@ export function convertInput(
     case "ARRAY": {
       const nums =
         extractArray(trim, "nums") ??
-        extractArray(trim, "prices");
+        extractArray(trim, "prices") ??
+        extractArray(trim, "candidates") ??
+        extractArray(trim, "height") ??
+        extractArray(trim, "board");
 
       if (!nums) return trim;
 
@@ -108,7 +111,11 @@ export function convertInput(
     case "ARRAY_TARGET_PAIR":
     case "ARRAY_TARGET_INDEX": {
       const nums =
-        extractArray(trim, "nums");
+        extractArray(trim, "nums") ??
+        extractArray(trim, "candidates") ??
+        extractArray(trim, "prices") ??
+        extractArray(trim, "height") ??
+        extractArray(trim, "board");
 
       const target =
         extractNumber(

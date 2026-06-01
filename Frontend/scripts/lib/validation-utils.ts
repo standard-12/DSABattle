@@ -80,6 +80,14 @@ function splitLines(input: string): string[] {
     .filter((line) => line.length > 0);
 }
 
+function splitLinesPreservingEmpty(input: string): string[] {
+  return input
+    .replace(/\r/g, "")
+    .trim()
+    .split("\n")
+    .map((line) => line.trim());
+}
+
 function parseNumbers(raw: string): number[] {
   if (!raw.trim()) return [];
   return raw
@@ -90,13 +98,13 @@ function parseNumbers(raw: string): number[] {
 }
 
 function parseArrayInput(input: string): number[] {
-  const lines = splitLines(input);
+  const lines = splitLinesPreservingEmpty(input);
   const arrayLine = lines[1] ?? lines[0] ?? "";
   return parseNumbers(arrayLine);
 }
 
 function parseArrayTargetInput(input: string): { nums: number[]; target: number } {
-  const lines = splitLines(input);
+  const lines = splitLinesPreservingEmpty(input);
   return {
     nums: parseArrayInput(input),
     target: Number(lines[2] ?? lines[1] ?? lines[0] ?? "0"),
@@ -105,7 +113,9 @@ function parseArrayTargetInput(input: string): { nums: number[]; target: number 
 
 function parseIntegerInput(input: string): number {
   const lines = splitLines(input);
-  return Number(lines[0] ?? input.trim() ?? "0");
+  const rawValue = lines[0] ?? input.trim() ?? "0";
+  const numericMatch = rawValue.match(/-?\d+/);
+  return Number(numericMatch?.[0] ?? rawValue);
 }
 
 function parseStringInput(input: string): string {
@@ -260,6 +270,258 @@ function bestTimeToBuyAndSellStock(nums: number[]): number {
   return bestProfit;
 }
 
+function reverseInteger(n: number): number {
+  const sign = n < 0 ? -1 : 1;
+  let reversed = 0;
+  let num = Math.abs(n);
+  while (num > 0) {
+    reversed = reversed * 10 + (num % 10);
+    num = Math.floor(num / 10);
+  }
+  const result = sign * reversed;
+  const INT_MIN = -Math.pow(2, 31);
+  const INT_MAX = Math.pow(2, 31) - 1;
+  return result < INT_MIN || result > INT_MAX ? 0 : result;
+}
+
+function containerWithMostWater(nums: number[]): number {
+  let maxArea = 0;
+  let left = 0;
+  let right = nums.length - 1;
+  while (left < right) {
+    const width = right - left;
+    const height = Math.min(nums[left], nums[right]);
+    maxArea = Math.max(maxArea, width * height);
+    if (nums[left] < nums[right]) {
+      left += 1;
+    } else {
+      right -= 1;
+    }
+  }
+  return maxArea;
+}
+
+function threeSum(nums: number[]): number[][] {
+  nums.sort((a, b) => a - b);
+  const result: number[][] = [];
+  for (let i = 0; i < nums.length - 2; i += 1) {
+    if (i > 0 && nums[i] === nums[i - 1]) continue;
+    let left = i + 1;
+    let right = nums.length - 1;
+    while (left < right) {
+      const sum = nums[i] + nums[left] + nums[right];
+      if (sum === 0) {
+        result.push([nums[i], nums[left], nums[right]]);
+        while (left < right && nums[left] === nums[left + 1]) left += 1;
+        while (left < right && nums[right] === nums[right - 1]) right -= 1;
+        left += 1;
+        right -= 1;
+      } else if (sum < 0) {
+        left += 1;
+      } else {
+        right -= 1;
+      }
+    }
+  }
+  return result.length > 0 ? result : [];
+}
+
+function threeSumClosest(nums: number[], target: number): number {
+  nums.sort((a, b) => a - b);
+  let closest = nums[0] + nums[1] + nums[2];
+  for (let i = 0; i < nums.length - 2; i += 1) {
+    let left = i + 1;
+    let right = nums.length - 1;
+    while (left < right) {
+      const sum = nums[i] + nums[left] + nums[right];
+      if (Math.abs(sum - target) < Math.abs(closest - target)) {
+        closest = sum;
+      }
+      if (sum < target) {
+        left += 1;
+      } else {
+        right -= 1;
+      }
+    }
+  }
+  return closest;
+}
+
+function fourSum(nums: number[], target: number): number[][] {
+  nums.sort((a, b) => a - b);
+  const result: number[][] = [];
+  for (let i = 0; i < nums.length - 3; i += 1) {
+    if (i > 0 && nums[i] === nums[i - 1]) continue;
+    for (let j = i + 1; j < nums.length - 2; j += 1) {
+      if (j > i + 1 && nums[j] === nums[j - 1]) continue;
+      let left = j + 1;
+      let right = nums.length - 1;
+      while (left < right) {
+        const sum = nums[i] + nums[j] + nums[left] + nums[right];
+        if (sum === target) {
+          result.push([nums[i], nums[j], nums[left], nums[right]]);
+          while (left < right && nums[left] === nums[left + 1]) left += 1;
+          while (left < right && nums[right] === nums[right - 1]) right -= 1;
+          left += 1;
+          right -= 1;
+        } else if (sum < target) {
+          left += 1;
+        } else {
+          right -= 1;
+        }
+      }
+    }
+  }
+  return result.length > 0 ? result : [];
+}
+
+function nextPermutation(nums: number[]): void {
+  let i = nums.length - 2;
+  while (i >= 0 && nums[i] >= nums[i + 1]) i -= 1;
+  if (i >= 0) {
+    let j = nums.length - 1;
+    while (j > i && nums[j] <= nums[i]) j -= 1;
+    [nums[i], nums[j]] = [nums[j], nums[i]];
+  }
+
+  let left = i + 1;
+  let right = nums.length - 1;
+  while (left < right) {
+    [nums[left], nums[right]] = [nums[right], nums[left]];
+    left += 1;
+    right -= 1;
+  }
+}
+
+function searchInRotatedSortedArray(nums: number[], target: number): number {
+  let left = 0;
+  let right = nums.length - 1;
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+    if (nums[mid] === target) return mid;
+    if (nums[left] <= nums[mid]) {
+      if (target >= nums[left] && target < nums[mid]) {
+        right = mid - 1;
+      } else {
+        left = mid + 1;
+      }
+    } else {
+      if (target <= nums[right] && target > nums[mid]) {
+        left = mid + 1;
+      } else {
+        right = mid - 1;
+      }
+    }
+  }
+  return -1;
+}
+
+function findFirstAndLastPosition(nums: number[], target: number): number[] {
+  const findFirst = (): number => {
+    let left = 0;
+    let right = nums.length - 1;
+    while (left <= right) {
+      const mid = Math.floor((left + right) / 2);
+      if (nums[mid] === target) {
+        if (mid === 0 || nums[mid - 1] < target) return mid;
+        right = mid - 1;
+      } else if (nums[mid] < target) {
+        left = mid + 1;
+      } else {
+        right = mid - 1;
+      }
+    }
+    return -1;
+  };
+  const findLast = (): number => {
+    let left = 0;
+    let right = nums.length - 1;
+    while (left <= right) {
+      const mid = Math.floor((left + right) / 2);
+      if (nums[mid] === target) {
+        if (mid === nums.length - 1 || nums[mid + 1] > target) return mid;
+        left = mid + 1;
+      } else if (nums[mid] < target) {
+        left = mid + 1;
+      } else {
+        right = mid - 1;
+      }
+    }
+    return -1;
+  };
+  const first = findFirst();
+  if (first === -1) return [-1, -1];
+  return [first, findLast()];
+}
+
+function isValidSudoku(board: string[][]): boolean {
+  const rows = Array.from({ length: 9 }, () => new Set<string>());
+  const cols = Array.from({ length: 9 }, () => new Set<string>());
+  const boxes = Array.from({ length: 9 }, () => new Set<string>());
+  for (let i = 0; i < 9; i += 1) {
+    for (let j = 0; j < 9; j += 1) {
+      const char = board[i][j];
+      if (char === ".") continue;
+      const boxIndex = Math.floor(i / 3) * 3 + Math.floor(j / 3);
+      if (rows[i].has(char) || cols[j].has(char) || boxes[boxIndex].has(char)) {
+        return false;
+      }
+      rows[i].add(char);
+      cols[j].add(char);
+      boxes[boxIndex].add(char);
+    }
+  }
+  return true;
+}
+
+function parseSudokuBoardInput(input: string): string[][] {
+  const tokens = Array.from(input.matchAll(/"([^"]+)"|\b\.|[1-9]\b/g)).map(
+    (match) => match[1] ?? match[0]
+  );
+
+  if (tokens.length >= 81) {
+    const boardTokens = tokens.slice(tokens.length - 81);
+    const board: string[][] = [];
+
+    for (let row = 0; row < 9; row += 1) {
+      board.push(boardTokens.slice(row * 9, row * 9 + 9));
+    }
+
+    return board;
+  }
+
+  const lines = splitLines(input);
+  const boardLine = lines.slice(1).join(" ");
+  const fallbackTokens = Array.from(boardLine.matchAll(/"([^"]+)"|\b\.|[1-9]\b/g)).map(
+    (match) => match[1] ?? match[0]
+  );
+  const board: string[][] = [];
+
+  for (let row = 0; row < 9; row += 1) {
+    board.push(fallbackTokens.slice(row * 9, row * 9 + 9));
+  }
+
+  return board;
+}
+
+function combinationSum(candidates: number[], target: number): number[][] {
+  const result: number[][] = [];
+  const dfs = (start: number, path: number[], remaining: number): void => {
+    if (remaining === 0) {
+      result.push([...path]);
+      return;
+    }
+    if (remaining < 0) return;
+    for (let i = start; i < candidates.length; i += 1) {
+      path.push(candidates[i]);
+      dfs(i, path, remaining - candidates[i]);
+      path.pop();
+    }
+  };
+  dfs(0, [], target);
+  return result.length > 0 ? result : [];
+}
+
 const REFERENCE_SOLVERS: Record<string, ReferenceSolver> = {
   "two-sum": {
     pattern: "ARRAY_TARGET_PAIR",
@@ -309,6 +571,67 @@ const REFERENCE_SOLVERS: Record<string, ReferenceSolver> = {
   "best-time-to-buy-and-sell-stock": {
     pattern: "ARRAY",
     solve: (input) => bestTimeToBuyAndSellStock(parseArrayInput(input)),
+  },
+  "reverse-integer": {
+    pattern: "INTEGER",
+    solve: (input) => reverseInteger(parseIntegerInput(input)),
+  },
+  "container-with-most-water": {
+    pattern: "ARRAY",
+    solve: (input) => containerWithMostWater(parseArrayInput(input)),
+  },
+  "3sum": {
+    pattern: "ARRAY",
+    solve: (input) => threeSum(parseArrayInput(input)),
+  },
+  "3sum-closest": {
+    pattern: "ARRAY_TARGET_INDEX",
+    solve: (input) => {
+      const { nums, target } = parseArrayTargetInput(input);
+      return threeSumClosest(nums, target);
+    },
+  },
+  "4sum": {
+    pattern: "ARRAY_TARGET_PAIR",
+    solve: (input) => {
+      const { nums, target } = parseArrayTargetInput(input);
+      return fourSum(nums, target);
+    },
+  },
+  "next-permutation": {
+    pattern: "ARRAY",
+    solve: (input) => {
+      const nums = parseArrayInput(input);
+      nextPermutation(nums);
+      return nums;
+    },
+  },
+  "search-in-rotated-sorted-array": {
+    pattern: "ARRAY_TARGET_INDEX",
+    solve: (input) => {
+      const { nums, target } = parseArrayTargetInput(input);
+      return searchInRotatedSortedArray(nums, target);
+    },
+  },
+  "find-first-and-last-position-of-element-in-sorted-array": {
+    pattern: "ARRAY_TARGET_PAIR",
+    solve: (input) => {
+      const { nums, target } = parseArrayTargetInput(input);
+      return findFirstAndLastPosition(nums, target);
+    },
+  },
+  "valid-sudoku": {
+    pattern: "ARRAY",
+    solve: (input) => isValidSudoku(parseSudokuBoardInput(input)),
+  },
+  "combination-sum": {
+    pattern: "ARRAY_TARGET_PAIR",
+    solve: (input) => {
+      const lines = splitLinesPreservingEmpty(input);
+      const candidates = parseNumbers(lines[1] ?? lines[0] ?? "");
+      const target = Number(lines[2] ?? lines[1] ?? lines[0] ?? "0");
+      return combinationSum(candidates, target);
+    },
   },
 };
 

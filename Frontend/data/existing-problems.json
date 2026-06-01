@@ -1,7 +1,22 @@
 {
-  "generatedAt": "2026-05-31",
+  "generatedAt": "2026-06-01",
   "source": "data/problems",
   "currentProblems": [
+    {
+      "slug": "3sum",
+      "title": "3sum",
+      "pattern": "ARRAY"
+    },
+    {
+      "slug": "3sum-closest",
+      "title": "3sum Closest",
+      "pattern": "ARRAY_TARGET_INDEX"
+    },
+    {
+      "slug": "4sum",
+      "title": "4sum",
+      "pattern": "ARRAY_TARGET_PAIR"
+    },
     {
       "slug": "best-time-to-buy-and-sell-stock",
       "title": "Best Time To Buy And Sell Stock",
@@ -18,6 +33,11 @@
       "pattern": "INTEGER"
     },
     {
+      "slug": "container-with-most-water",
+      "title": "Container With Most Water",
+      "pattern": "ARRAY"
+    },
+    {
       "slug": "contains-duplicate",
       "title": "Contains Duplicate",
       "pattern": "ARRAY"
@@ -31,6 +51,11 @@
       "slug": "maximum-subarray",
       "title": "Maximum Subarray",
       "pattern": "ARRAY"
+    },
+    {
+      "slug": "reverse-integer",
+      "title": "Reverse Integer",
+      "pattern": "INTEGER"
     },
     {
       "slug": "running-sum-of-1d-array",

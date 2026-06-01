@@ -31,6 +31,18 @@ interface DiscoveryReport {
   supported: SupportedProblemEntry[];
 }
 
+interface ExistingProblemEntry {
+  slug: string;
+  title: string;
+  pattern: ProblemPattern | "UNKNOWN";
+}
+
+interface ExistingProblemsFile {
+  generatedAt: string;
+  source: string;
+  currentProblems: ExistingProblemEntry[];
+}
+
 interface Example {
   input: string;
   output: string;
@@ -62,9 +74,22 @@ interface TestCasesJson {
   test_cases: TestCase[];
 }
 
+const EXAMPLE_TESTCASE_SLUGS = new Set([
+  "next-permutation",
+  "search-in-rotated-sorted-array",
+  "find-first-and-last-position-of-element-in-sorted-array",
+  "valid-sudoku",
+  "combination-sum",
+]);
+
+const RAW_EXAMPLE_TESTCASE_SLUGS = new Set(["valid-sudoku"]);
+
 const DATASET_PATH = path.resolve("datasets/LeetCodeDataset-v0.3.1-train.jsonl");
 const REPORT_PATH = path.resolve("data/pattern-discovery-report.json");
 const OUTPUT_DIR = path.resolve(process.env.PROBLEMS_ROOT ?? "data/problems");
+const EXISTING_PROBLEMS_PATH = path.resolve(
+  process.env.EXISTING_PROBLEMS_PATH ?? "data/existing-problems.json"
+);
 function readIntEnv(name: string, fallback: number): number {
   const rawValue = process.env[name];
   if (rawValue === undefined) return fallback;
@@ -144,9 +169,22 @@ function isDiscardedOutput(value: string): boolean {
 async function readDiscoveryReport(): Promise<SupportedProblemEntry[]> {
   const reportText = await fs.readFile(REPORT_PATH, "utf8");
   const report = JSON.parse(reportText.replace(/^\uFEFF/, "")) as DiscoveryReport;
-  const safeStart = Math.max(0, START);
-  const safeLimit = Math.max(0, LIMIT);
-  return report.supported.slice(safeStart, safeStart + safeLimit);
+  return report.supported;
+}
+
+async function readExistingProblemSlugs(): Promise<Set<string>> {
+  try {
+    const existingText = await fs.readFile(EXISTING_PROBLEMS_PATH, "utf8");
+    const existing = JSON.parse(existingText.replace(/^\uFEFF/, "")) as ExistingProblemsFile;
+
+    return new Set(
+      (Array.isArray(existing.currentProblems) ? existing.currentProblems : []).map(
+        (problem) => problem.slug
+      )
+    );
+  } catch {
+    return new Set();
+  }
 }
 
 async function readDatasetRows(): Promise<Map<string, DatasetRow>> {
@@ -190,6 +228,15 @@ async function writeProblemFiles(entry: SupportedProblemEntry, row: DatasetRow):
       ? problemDescription.trim()
       : problemDescription.slice(0, firstExampleIndex).trim();
 
+  const rawExamples = parseDescriptionExamples(problemDescription);
+  const normalizedExamples = rawExamples
+    .map((example) => ({
+      input: convertInput(entry.pattern, example.input),
+      output: normalizeOutput(entry.pattern, example.output),
+      explanation: example.explanation,
+    }))
+    .filter((example) => !isMalformedCase(example.input) && !isDiscardedOutput(example.output));
+
   const problem: ProblemJson = {
     title: slugToTitle(entry.slug),
     slug: entry.slug,
@@ -199,30 +246,46 @@ async function writeProblemFiles(entry: SupportedProblemEntry, row: DatasetRow):
     input_format: getInputFormat(entry.pattern),
     output_format: getOutputFormat(entry.pattern),
     constraints: parseConstraints(problemDescription),
-    examples: parseDescriptionExamples(problemDescription)
-      .map((example) => ({
-        input: convertInput(entry.pattern, example.input),
-        output: normalizeOutput(entry.pattern, example.output),
-        explanation: example.explanation,
-      }))
-      .filter((example) => !isMalformedCase(example.input) && !isDiscardedOutput(example.output)),
+    examples: normalizedExamples,
   };
 
   const testCaseRows = (Array.isArray(row.input_output) ? row.input_output : []).filter(
     (tc) => !isMalformedCase(tc.input) && !isMalformedCase(tc.output)
   );
 
-  const testCases: TestCase[] = testCaseRows
-    .map((tc) => ({
-      input: convertInput(entry.pattern, tc.input),
-      expected_output: normalizeOutput(entry.pattern, tc.output),
-      display_input: tc.input,
-      display_output: tc.output,
+  const exampleCases = problem.examples.map((example) => ({
+    input: example.input,
+    output: example.output,
+    display_input: example.input,
+    display_output: example.output,
+  }));
+
+  const rawExampleCases = rawExamples
+    .map((example) => ({
+      input: example.input,
+      output: normalizeOutput(entry.pattern, example.output),
+      display_input: example.input,
+      display_output: example.output,
     }))
-    .filter((testCase) => !isDiscardedOutput(testCase.expected_output))
+    .filter((testCase) => !isDiscardedOutput(testCase.output));
+
+  const sourceCases =
+    RAW_EXAMPLE_TESTCASE_SLUGS.has(entry.slug)
+      ? rawExampleCases
+      : EXAMPLE_TESTCASE_SLUGS.has(entry.slug) || testCaseRows.length === 0
+      ? exampleCases
+      : testCaseRows.map((tc) => ({
+          input: convertInput(entry.pattern, tc.input),
+          output: normalizeOutput(entry.pattern, tc.output),
+          display_input: tc.input,
+          display_output: tc.output,
+        }));
+
+  const testCases: TestCase[] = sourceCases
+    .filter((testCase) => !isDiscardedOutput(testCase.output))
     .map((testCase, index) => ({
       input: testCase.input,
-      expected_output: testCase.expected_output,
+      expected_output: testCase.output,
       display_input: testCase.display_input,
       display_output: testCase.display_output,
       visibility: index + 1 <= 3 ? "PUBLIC" : "PRIVATE",
@@ -236,12 +299,18 @@ async function writeProblemFiles(entry: SupportedProblemEntry, row: DatasetRow):
 }
 
 async function main(): Promise<void> {
-  const [rows, supported] = await Promise.all([
+  const [rows, supported, existingSlugs] = await Promise.all([
     readDatasetRows(),
     readDiscoveryReport(),
+    readExistingProblemSlugs(),
   ]);
 
-  const selected = supported.filter((entry) => getReferenceSolver(entry.slug));
+  const safeStart = Math.max(0, START);
+  const safeLimit = Math.max(0, LIMIT);
+  const available = supported.filter(
+    (entry) => getReferenceSolver(entry.slug) && !existingSlugs.has(entry.slug)
+  );
+  const selected = available.slice(safeStart, safeStart + safeLimit);
   let written = 0;
 
   for (const entry of selected) {
@@ -256,7 +325,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `Wrote ${written} supported problems to ${OUTPUT_DIR} (START=${START}, LIMIT=${LIMIT})`
+    `Wrote ${written} supported problems to ${OUTPUT_DIR} (START=${START}, LIMIT=${LIMIT}, excludedExisting=${existingSlugs.size})`
   );
 }
 
