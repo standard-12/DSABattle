@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { ProblemDetail } from "@/components/problems/ProblemDetail";
 import { getProblemBySlug } from "@/lib/problems/getProblemBySlug";
+import { SolverWorkspace } from "@/components/editor/SolverWorkspace";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -39,5 +40,10 @@ export default async function ProblemPage({ params }: ProblemPageProps) {
     notFound();
   }
 
-  return <ProblemDetail problem={problem} />;
+  return (
+    <main className="space-y-8 pb-8">
+      <ProblemDetail problem={problem} />
+      <SolverWorkspace />
+    </main>
+  );
 }
