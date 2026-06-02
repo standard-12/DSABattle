@@ -18,9 +18,6 @@ export async function getProblems(): Promise<ProblemListItem[]> {
       .select("id, title, slug, difficulty, categories")
       .order("title", { ascending: true });
 
-
-    console.log("DATA:", data);
-    console.log("ERROR:", error);  
     if (error) {
       console.error("Error fetching problems:", error.message);
       return [];

@@ -6,7 +6,6 @@ export const revalidate = 0;
 
 export default async function ProblemsPage() {
   const problems = await getProblems();
-  console.log("Problems:", problems);
 
   return <ProblemsList problems={problems} />;
 }
