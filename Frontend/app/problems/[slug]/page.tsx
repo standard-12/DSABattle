@@ -43,7 +43,7 @@ export default async function ProblemPage({ params }: ProblemPageProps) {
   return (
     <main className="space-y-8 pb-8">
       <ProblemDetail problem={problem} />
-      <SolverWorkspace />
+      <SolverWorkspace problemId={problem.id}/>
     </main>
   );
 }
