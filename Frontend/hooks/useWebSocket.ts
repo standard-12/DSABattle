@@ -12,6 +12,9 @@ import {
 export interface UseWebSocketOptions {
   userId: string;
   username: string;
+  rating: number;
+  ratingLower: number;
+  ratingUpper: number;
 }
 
 export interface UseWebSocketState {
@@ -162,9 +165,9 @@ export function useWebSocket(options: UseWebSocketOptions) {
   const joinQueue = useCallback(() => {
     if (!state.connected || state.inQueue || !options.userId) return;
     // Send to server — inQueue becomes true only when server confirms via queue_joined
-    sendRaw(createJoinQueueMessage(options.userId, options.username));
+    sendRaw(createJoinQueueMessage(options.userId, options.username, options.rating, options.ratingLower, options.ratingUpper));
     setState((prev) => ({ ...prev, error: null }));
-  }, [state.connected, state.inQueue, options.userId, options.username, sendRaw]);
+  }, [state.connected, state.inQueue, options.userId, options.username, options.rating, options.ratingLower, options.ratingUpper, sendRaw]);
 
   const leaveQueue = useCallback(() => {
     if (!state.inQueue || !options.userId) return;

@@ -17,7 +17,13 @@ export interface WebSocketMessage {
 
 export interface JoinQueueMessage extends WebSocketMessage {
   type: 'join_queue';
-  payload: { userId: string; username: string };
+  payload: {
+    userId: string;
+    username: string;
+    rating: number;
+    ratingLower: number;  // negative delta, e.g. -200
+    ratingUpper: number;  // positive delta, e.g. +200
+  };
 }
 
 export interface LeaveQueueMessage extends WebSocketMessage {

@@ -6,6 +6,9 @@ interface QueuedUser {
   clientId: string;
   userId: string;
   username: string;
+  rating: number;
+  ratingLower: number;
+  ratingUpper: number;
   joinedAt: number;
 }
 
@@ -20,7 +23,14 @@ export function isUserInQueue(userId: string): boolean {
   return queuedUserIds.has(userId);
 }
 
-export function addToQueue(clientId: string, userId: string, username: string): boolean {
+export function addToQueue(
+  clientId: string,
+  userId: string,
+  username: string,
+  rating: number,
+  ratingLower: number,
+  ratingUpper: number,
+): boolean {
   if (queuedUserIds.has(userId)) {
     sendErrorToClient(clientId, 'Already in queue', 'DUPLICATE_QUEUE');
     return false;
@@ -29,7 +39,7 @@ export function addToQueue(clientId: string, userId: string, username: string): 
   const session = getClientSession(clientId);
   if (!session) return false;
 
-  matchmakingQueue.push({ clientId, userId, username, joinedAt: Date.now() });
+  matchmakingQueue.push({ clientId, userId, username, rating, ratingLower, ratingUpper, joinedAt: Date.now() });
   queuedUserIds.add(userId);
   session.inQueue = true;
   session.userId = userId;
@@ -82,12 +92,14 @@ export function cleanupOnDisconnect(clientId: string): void {
   removeFromQueueByClientId(clientId);
 }
 
-function tryMatchUsers(): void {
-  if (matchmakingQueue.length < 2) return;
+function isCompatible(a: QueuedUser, b: QueuedUser): boolean {
+  // b must fall within a's configured range, and a must fall within b's configured range
+  const bInA = b.rating >= a.rating + a.ratingLower && b.rating <= a.rating + a.ratingUpper;
+  const aInB = a.rating >= b.rating + b.ratingLower && a.rating <= b.rating + b.ratingUpper;
+  return bInA && aInB;
+}
 
-  const user1 = matchmakingQueue.shift()!;
-  const user2 = matchmakingQueue.shift()!;
-
+function pairUsers(user1: QueuedUser, user2: QueuedUser): void {
   queuedUserIds.delete(user1.userId);
   queuedUserIds.delete(user2.userId);
 
@@ -113,8 +125,32 @@ function tryMatchUsers(): void {
   broadcastToClient(user1.clientId, matchFor1);
   broadcastToClient(user2.clientId, matchFor2);
 
-  console.log(`[Matchmaking] Match! Room: ${battleRoomId} | ${user1.username} vs ${user2.username}`);
+  console.log(
+    `[Matchmaking] Match! Room: ${battleRoomId} | ${user1.username} (${user1.rating}) vs ${user2.username} (${user2.rating})`
+  );
+}
 
-  // Recursively match remaining users
-  if (matchmakingQueue.length >= 2) tryMatchUsers();
+function tryMatchUsers(): void {
+  if (matchmakingQueue.length < 2) return;
+
+  // For each player (in join order), find the first compatible opponent after them
+  let matched = false;
+  for (let i = 0; i < matchmakingQueue.length - 1; i++) {
+    const a = matchmakingQueue[i];
+    for (let j = i + 1; j < matchmakingQueue.length; j++) {
+      const b = matchmakingQueue[j];
+      if (isCompatible(a, b)) {
+        // Remove higher index first to keep indices valid
+        matchmakingQueue.splice(j, 1);
+        matchmakingQueue.splice(i, 1);
+        pairUsers(a, b);
+        matched = true;
+        break;
+      }
+    }
+    if (matched) break;
+  }
+
+  // If we found a match, try again — there may be more compatible pairs
+  if (matched && matchmakingQueue.length >= 2) tryMatchUsers();
 }

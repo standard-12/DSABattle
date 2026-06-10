@@ -15,8 +15,14 @@ export interface WebSocketMessage {
   timestamp: number;
 }
 
-export function createJoinQueueMessage(userId: string, username: string): WebSocketMessage {
-  return { type: 'join_queue', payload: { userId, username }, timestamp: Date.now() };
+export function createJoinQueueMessage(
+  userId: string,
+  username: string,
+  rating: number,
+  ratingLower: number,
+  ratingUpper: number,
+): WebSocketMessage {
+  return { type: 'join_queue', payload: { userId, username, rating, ratingLower, ratingUpper }, timestamp: Date.now() };
 }
 
 export function createLeaveQueueMessage(userId: string): WebSocketMessage {

@@ -42,9 +42,9 @@ wss.on('connection', (ws: WebSocket) => {
       const typed = message as unknown as ClientMessage;
 
       if (isJoinQueueMessage(typed)) {
-        const { userId, username } = typed.payload;
-        if (!userId || !username) return;
-        addToQueue(session.clientId, userId, username);
+        const { userId, username, rating, ratingLower, ratingUpper } = typed.payload;
+        if (!userId || !username || rating == null) return;
+        addToQueue(session.clientId, userId, username, rating, ratingLower ?? -200, ratingUpper ?? 200);
 
       } else if (isLeaveQueueMessage(typed)) {
         const { userId } = typed.payload;
