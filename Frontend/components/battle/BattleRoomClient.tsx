@@ -1,9 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { Swords } from "lucide-react";
 
-import { ProblemDetail } from "@/components/problems/ProblemDetail";
+import { ProblemPanel } from "@/components/workspace/ProblemPanel";
+import { WorkspaceShell } from "@/components/workspace/WorkspaceShell";
 import { BattleWorkspace } from "@/components/battle/BattleWorkspace";
+import { BattleTimer } from "@/components/battle/BattleTimer";
 import { Badge } from "@/components/ui/badge";
 import { useBattleSocket } from "@/hooks/useBattleSocket";
 import type { ProblemDetail as ProblemDetailType } from "@/types/problem";
@@ -12,6 +15,7 @@ type BattleRoomClientProps = {
   battleId: string;
   initialStatus: string;
   alreadyFinished: boolean;
+  startedAt: string | null;
   userId: string;
   username: string;
   opponent: { userId: string; username: string } | null;
@@ -22,6 +26,7 @@ export function BattleRoomClient({
   battleId,
   initialStatus,
   alreadyFinished,
+  startedAt,
   userId,
   username,
   opponent,
@@ -31,41 +36,47 @@ export function BattleRoomClient({
 
   const ended = battle.battleEnded || initialStatus === "ENDED" || alreadyFinished;
 
-  return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Battle header bar */}
-      <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
-          <div className="flex items-center gap-3">
-            <span className="text-lg font-bold text-primary">Battle</span>
-            <Badge variant="outline" className="font-mono text-xs">
-              {battleId.slice(0, 8)}
-            </Badge>
+  const topBar = (
+    <div className="shrink-0 border-b border-border bg-card">
+      {/* Status row */}
+      <div className="flex items-center justify-between gap-3 px-4 py-2.5">
+        <div className="flex items-center gap-2">
+          <Swords className="h-4 w-4 text-primary" />
+          <span className="text-sm font-bold text-primary">Battle</span>
+          <Badge variant="outline" className="font-mono text-[10px]">
+            {battleId.slice(0, 8)}
+          </Badge>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <BattleTimer startedAt={startedAt} stopped={ended} />
+
+          <div className="flex items-center gap-1.5 text-sm">
+            <div
+              className={`h-2 w-2 rounded-full ${battle.connected ? "bg-green-500" : "bg-red-500"}`}
+            />
+            <span className="hidden text-muted-foreground sm:inline">
+              {battle.connected ? "Live" : "Reconnecting"}
+            </span>
           </div>
 
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-sm">
-              <div
-                className={`h-2.5 w-2.5 rounded-full ${
-                  battle.connected ? "bg-green-500" : "bg-red-500"
-                }`}
-              />
-              <span className="text-muted-foreground">
-                {battle.connected ? "Connected" : "Reconnecting..."}
-              </span>
-            </div>
-            <div className="text-sm text-muted-foreground">
-              vs <span className="font-medium text-foreground">{opponent?.username ?? "Opponent"}</span>
-            </div>
+          <div className="flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1 text-sm">
+            <span className="text-muted-foreground">vs</span>
+            <span className="font-medium text-foreground">{opponent?.username ?? "Opponent"}</span>
           </div>
         </div>
-      </header>
+      </div>
 
-      {/* Live status banner */}
-      <StatusBanner battle={battle} ended={ended} alreadyFinished={alreadyFinished} />
+      {/* Result / live banner */}
+      <ResultStrip battle={battle} ended={ended} alreadyFinished={alreadyFinished} />
+    </div>
+  );
 
-      <main className="mx-auto max-w-6xl space-y-8 px-4 pb-12 sm:px-6 lg:px-8">
-        <ProblemDetail problem={problem} />
+  return (
+    <WorkspaceShell
+      topBar={topBar}
+      left={<ProblemPanel problem={problem} />}
+      right={
         <BattleWorkspace
           onSubmit={battle.submit}
           problemId={problem.id}
@@ -73,12 +84,12 @@ export function BattleRoomClient({
           result={battle.result}
           disabled={ended}
         />
-      </main>
-    </div>
+      }
+    />
   );
 }
 
-function StatusBanner({
+function ResultStrip({
   battle,
   ended,
   alreadyFinished,
@@ -87,85 +98,64 @@ function StatusBanner({
   ended: boolean;
   alreadyFinished: boolean;
 }) {
-  // Final result takes priority
+  // Final result with rating change
   if (battle.battleEnded && battle.outcome) {
     const win = battle.outcome === "WIN";
     return (
       <div
-        className={`border-b ${
+        className={`flex items-center justify-center gap-3 border-t px-4 py-2 text-sm ${
           win
-            ? "border-green-600/40 bg-green-600/10"
-            : "border-red-600/40 bg-red-600/10"
+            ? "border-green-600/30 bg-green-600/10 text-green-500"
+            : "border-red-600/30 bg-red-600/10 text-red-500"
         }`}
       >
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-6 py-5 text-center">
-          <h2 className={`text-2xl font-bold ${win ? "text-green-500" : "text-red-500"}`}>
-            {win ? "🏆 You Won!" : "Defeat"}
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            {win
-              ? "You solved it first."
-              : `${battle.winnerUsername ?? "Your opponent"} solved it first.`}
-          </p>
-          {battle.ratingChange != null && battle.newRating != null && (
-            <p className="text-sm">
-              Rating:{" "}
-              <span className={battle.ratingChange >= 0 ? "text-green-500" : "text-red-500"}>
-                {battle.ratingChange >= 0 ? "+" : ""}
-                {battle.ratingChange}
-              </span>{" "}
-              → <span className="font-semibold">{battle.newRating}</span>
-            </p>
-          )}
-          <Link
-            href="/dashboard"
-            className="mt-2 rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-background transition-colors hover:bg-primary/90"
-          >
-            Back to Dashboard
-          </Link>
-        </div>
+        <span className="font-semibold">
+          {win ? "🏆 You won!" : `Defeat — ${battle.winnerUsername ?? "opponent"} solved it first`}
+        </span>
+        {battle.ratingChange != null && battle.newRating != null && (
+          <span className="text-foreground/80">
+            Rating {battle.ratingChange >= 0 ? "+" : ""}
+            {battle.ratingChange} → <span className="font-semibold">{battle.newRating}</span>
+          </span>
+        )}
+        <Link href="/dashboard" className="font-medium text-primary hover:underline">
+          Dashboard
+        </Link>
       </div>
     );
   }
 
-  // Revisiting an already-finished battle (no live result in this session)
+  // Revisiting a finished battle
   if (ended) {
     return (
-      <div className="border-b border-border bg-muted/30">
-        <div className="mx-auto flex max-w-6xl items-center justify-center gap-3 px-6 py-3 text-center text-sm text-muted-foreground">
-          {alreadyFinished
-            ? "You already finished this battle."
-            : "This battle has ended."}
-          <Link href="/dashboard" className="font-medium text-primary hover:underline">
-            Back to Dashboard
-          </Link>
-        </div>
+      <div className="flex items-center justify-center gap-3 border-t border-border bg-muted/30 px-4 py-2 text-sm text-muted-foreground">
+        {alreadyFinished ? "You already finished this battle." : "This battle has ended."}
+        <Link href="/dashboard" className="font-medium text-primary hover:underline">
+          Dashboard
+        </Link>
       </div>
     );
   }
 
-  // Opponent just submitted
+  // Opponent submitted
   if (battle.opponentSubmitted) {
     const accepted = battle.opponentSubmitted.verdict === "ACCEPTED";
     return (
-      <div className="border-b border-amber-500/30 bg-amber-500/10">
-        <div className="mx-auto max-w-6xl px-6 py-3 text-center text-sm">
-          <span className="font-medium">{battle.opponentSubmitted.username}</span> submitted —{" "}
-          <span className={accepted ? "text-green-500" : "text-muted-foreground"}>
-            {battle.opponentSubmitted.verdict}
-          </span>
-          {!accepted && " · still anyone's game!"}
-        </div>
+      <div className="flex items-center justify-center gap-1.5 border-t border-amber-500/30 bg-amber-500/10 px-4 py-2 text-sm">
+        <span className="font-medium">{battle.opponentSubmitted.username}</span>
+        <span className="text-muted-foreground">submitted —</span>
+        <span className={accepted ? "text-green-500" : "text-muted-foreground"}>
+          {battle.opponentSubmitted.verdict.replace(/_/g, " ")}
+        </span>
+        {!accepted && <span className="text-muted-foreground">· still anyone&apos;s game!</span>}
       </div>
     );
   }
 
-  // Default: in progress
+  // In progress
   return (
-    <div className="border-b border-border bg-card/50">
-      <div className="mx-auto max-w-6xl px-6 py-2.5 text-center text-sm text-muted-foreground">
-        Battle in progress — first to solve all test cases wins.
-      </div>
+    <div className="border-t border-border bg-background px-4 py-1.5 text-center text-xs text-muted-foreground">
+      First to solve all test cases wins.
     </div>
   );
 }

@@ -8,13 +8,21 @@ type CodeEditorProps = {
   language: Language;
   code: string;
   onChange: (value: string) => void;
+  height?: string;
+  className?: string;
 };
 
-export function CodeEditor({ language, code, onChange }: CodeEditorProps) {
+export function CodeEditor({
+  language,
+  code,
+  onChange,
+  height = "420px",
+  className = "rounded-xl border border-border shadow-sm",
+}: CodeEditorProps) {
   return (
-    <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+    <div className={`h-full overflow-hidden bg-card ${className}`}>
       <Editor
-        height="420px"
+        height={height}
         language={language}
         theme="vs-dark"
         value={code}

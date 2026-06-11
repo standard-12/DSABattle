@@ -5,6 +5,7 @@ export type BattleRoomInfo = {
   status: string;
   problemId: string;
   problemSlug: string;
+  startedAt: string | null;
   opponent: { userId: string; username: string } | null;
   finished: boolean; // has the current user already solved it
 };
@@ -25,12 +26,12 @@ export async function getBattleRoom(
 
     const { data: battle, error: battleErr } = await supabase
       .from("battles")
-      .select("id, status, problem_id")
+      .select("id, status, problem_id, started_at")
       .eq("id", roomId)
       .maybeSingle();
 
     if (battleErr || !battle) return null;
-    const b = battle as { id: string; status: string; problem_id: string };
+    const b = battle as { id: string; status: string; problem_id: string; started_at: string | null };
 
     const { data: parts, error: partErr } = await supabase
       .from("battle_participants")
@@ -70,6 +71,7 @@ export async function getBattleRoom(
       status: b.status,
       problemId: b.problem_id,
       problemSlug: (problem as { slug: string } | null)?.slug ?? "",
+      startedAt: b.started_at,
       opponent,
       finished: self.finish_position != null,
     };

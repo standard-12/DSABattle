@@ -45,6 +45,7 @@ export default async function RoomPage({ params }: RoomPageProps) {
       battleId={room.battleId}
       initialStatus={room.status}
       alreadyFinished={room.finished}
+      startedAt={room.startedAt}
       userId={user.id}
       username={profile?.username ?? "You"}
       opponent={room.opponent}
