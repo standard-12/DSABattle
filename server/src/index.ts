@@ -13,10 +13,13 @@ import {
   cleanupOnDisconnect,
   getQueueSize,
 } from './services';
+import { handleJoinBattle, handleBattleSubmit } from './services/battle';
 import {
   isJoinQueueMessage,
   isLeaveQueueMessage,
   isHeartbeatMessage,
+  isJoinBattleMessage,
+  isBattleSubmitMessage,
   ClientMessage,
 } from './types';
 import { parseMessage } from './utils';
@@ -53,6 +56,16 @@ wss.on('connection', (ws: WebSocket) => {
 
       } else if (isHeartbeatMessage(typed)) {
         updateHeartbeat(session.clientId);
+
+      } else if (isJoinBattleMessage(typed)) {
+        const { battleId, userId, username } = typed.payload;
+        if (!battleId || !userId) return;
+        void handleJoinBattle(session.clientId, { battleId, userId, username });
+
+      } else if (isBattleSubmitMessage(typed)) {
+        const { battleId, userId, problemId, code, language } = typed.payload;
+        if (!battleId || !userId || !problemId || !code || !language) return;
+        void handleBattleSubmit(session.clientId, { battleId, userId, problemId, code, language });
 
       } else {
         console.warn(`[Server] Unknown message type: ${message.type}`);

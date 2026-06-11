@@ -7,7 +7,15 @@ export type MessageType =
   | 'queue_joined'
   | 'heartbeat'
   | 'error'
-  | 'connected';
+  | 'connected'
+  | 'join_battle'
+  | 'battle_submit'
+  | 'battle_joined'
+  | 'submission_result'
+  | 'opponent_submitted'
+  | 'battle_ended';
+
+export type Language = 'python' | 'java' | 'cpp';
 
 export interface WebSocketMessage {
   type: MessageType;
@@ -31,4 +39,26 @@ export function createLeaveQueueMessage(userId: string): WebSocketMessage {
 
 export function createHeartbeatMessage(userId: string): WebSocketMessage {
   return { type: 'heartbeat', payload: { userId }, timestamp: Date.now() };
+}
+
+export function createJoinBattleMessage(
+  battleId: string,
+  userId: string,
+  username: string,
+): WebSocketMessage {
+  return { type: 'join_battle', payload: { battleId, userId, username }, timestamp: Date.now() };
+}
+
+export function createBattleSubmitMessage(
+  battleId: string,
+  userId: string,
+  problemId: string,
+  code: string,
+  language: Language,
+): WebSocketMessage {
+  return {
+    type: 'battle_submit',
+    payload: { battleId, userId, problemId, code, language },
+    timestamp: Date.now(),
+  };
 }

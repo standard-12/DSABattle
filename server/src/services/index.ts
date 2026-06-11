@@ -1,6 +1,6 @@
-import { generateBattleRoomId } from '../utils';
 import { getClientSession, broadcastToClient, sendErrorToClient } from './connection';
-import { MatchFoundMessage, QueueJoinedMessage } from '../types';
+import { QueueJoinedMessage } from '../types';
+import { createBattleAndNotify } from './battle';
 
 interface QueuedUser {
   clientId: string;
@@ -108,25 +108,15 @@ function pairUsers(user1: QueuedUser, user2: QueuedUser): void {
   if (session1) session1.inQueue = false;
   if (session2) session2.inQueue = false;
 
-  const battleRoomId = generateBattleRoomId();
-  const now = Date.now();
-
-  const matchFor1: MatchFoundMessage = {
-    type: 'match_found',
-    payload: { battleRoomId, opponent: { userId: user2.userId, username: user2.username } },
-    timestamp: now,
-  };
-  const matchFor2: MatchFoundMessage = {
-    type: 'match_found',
-    payload: { battleRoomId, opponent: { userId: user1.userId, username: user1.username } },
-    timestamp: now,
-  };
-
-  broadcastToClient(user1.clientId, matchFor1);
-  broadcastToClient(user2.clientId, matchFor2);
-
   console.log(
-    `[Matchmaking] Match! Room: ${battleRoomId} | ${user1.username} (${user1.rating}) vs ${user2.username} (${user2.rating})`
+    `[Matchmaking] Pairing ${user1.username} (${user1.rating}) vs ${user2.username} (${user2.rating})`
+  );
+
+  // Create the battle in the DB + room state, then notify both clients.
+  // Fire-and-forget: matchmaking stays synchronous, battle creation is async.
+  void createBattleAndNotify(
+    { clientId: user1.clientId, userId: user1.userId, username: user1.username },
+    { clientId: user2.clientId, userId: user2.userId, username: user2.username },
   );
 }
 

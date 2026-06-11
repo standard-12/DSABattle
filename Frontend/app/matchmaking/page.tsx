@@ -1,6 +1,6 @@
 'use client';
 
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useWebSocket } from '@/hooks/useWebSocket';
@@ -19,6 +19,7 @@ const DEFAULT_RATING_UPPER = 200;
 
 export default function MatchmakingPage() {
   const supabase = createClient();
+  const router = useRouter();
   const [user, setUser] = useState<{ id: string; email?: string } | null>(null);
   const [userProfile, setUserProfile] = useState<{ username: string; rating: number } | null>(null);
   const [loading, setLoading] = useState(true);
@@ -61,6 +62,13 @@ export default function MatchmakingPage() {
         }
       : { userId: '', username: '', rating: 1000, ratingLower: DEFAULT_RATING_LOWER, ratingUpper: DEFAULT_RATING_UPPER }
   );
+
+  // When a match is found, both players are routed into the battle room.
+  useEffect(() => {
+    if (ws.matchFound && ws.battleRoomId) {
+      router.push(`/room/${ws.battleRoomId}`);
+    }
+  }, [ws.matchFound, ws.battleRoomId, router]);
 
   if (loading) {
     return (

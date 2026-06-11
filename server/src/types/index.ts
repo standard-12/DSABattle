@@ -5,7 +5,15 @@ export type MessageType =
   | 'queue_joined'
   | 'heartbeat'
   | 'error'
-  | 'connected';
+  | 'connected'
+  | 'join_battle'
+  | 'battle_submit'
+  | 'battle_joined'
+  | 'submission_result'
+  | 'opponent_submitted'
+  | 'battle_ended';
+
+export type Language = 'python' | 'java' | 'cpp';
 
 export interface WebSocketMessage {
   type: MessageType;
@@ -36,6 +44,22 @@ export interface HeartbeatMessage extends WebSocketMessage {
   payload: { userId: string };
 }
 
+export interface JoinBattleMessage extends WebSocketMessage {
+  type: 'join_battle';
+  payload: { battleId: string; userId: string; username: string };
+}
+
+export interface BattleSubmitMessage extends WebSocketMessage {
+  type: 'battle_submit';
+  payload: {
+    battleId: string;
+    userId: string;
+    problemId: string;
+    code: string;
+    language: Language;
+  };
+}
+
 // ── Server → Client ──────────────────────────────────────────────────────────
 
 export interface ConnectedMessage extends WebSocketMessage {
@@ -62,18 +86,64 @@ export interface ErrorMessage extends WebSocketMessage {
   payload: { message: string; code?: string };
 }
 
+/** Confirms the user joined a battle room; opponent is null until they arrive. */
+export interface BattleJoinedMessage extends WebSocketMessage {
+  type: 'battle_joined';
+  payload: {
+    battleId: string;
+    status: string;
+    opponent: { userId: string; username: string } | null;
+  };
+}
+
+/** Verdict for the submitter's own battle submission. */
+export interface SubmissionResultMessage extends WebSocketMessage {
+  type: 'submission_result';
+  payload: {
+    verdict: string;
+    passedTestcases: number;
+    totalTestcases: number;
+    runtimeMs: number | null;
+    memoryKb: number | null;
+  };
+}
+
+/** Tells a player their opponent just submitted (and the verdict). */
+export interface OpponentSubmittedMessage extends WebSocketMessage {
+  type: 'opponent_submitted';
+  payload: { username: string; verdict: string };
+}
+
+/** Final result, sent to both players. `outcome` is relative to the recipient. */
+export interface BattleEndedMessage extends WebSocketMessage {
+  type: 'battle_ended';
+  payload: {
+    winnerId: string;
+    winnerUsername: string;
+    outcome: 'WIN' | 'LOSS';
+    ratingChange: number;
+    newRating: number;
+  };
+}
+
 // ── Union types ───────────────────────────────────────────────────────────────
 
 export type ServerMessage =
   | ConnectedMessage
   | QueueJoinedMessage
   | MatchFoundMessage
-  | ErrorMessage;
+  | ErrorMessage
+  | BattleJoinedMessage
+  | SubmissionResultMessage
+  | OpponentSubmittedMessage
+  | BattleEndedMessage;
 
 export type ClientMessage =
   | JoinQueueMessage
   | LeaveQueueMessage
-  | HeartbeatMessage;
+  | HeartbeatMessage
+  | JoinBattleMessage
+  | BattleSubmitMessage;
 
 // ── Type guards ───────────────────────────────────────────────────────────────
 
@@ -87,4 +157,12 @@ export function isLeaveQueueMessage(msg: ClientMessage): msg is LeaveQueueMessag
 
 export function isHeartbeatMessage(msg: ClientMessage): msg is HeartbeatMessage {
   return msg.type === 'heartbeat';
+}
+
+export function isJoinBattleMessage(msg: ClientMessage): msg is JoinBattleMessage {
+  return msg.type === 'join_battle';
+}
+
+export function isBattleSubmitMessage(msg: ClientMessage): msg is BattleSubmitMessage {
+  return msg.type === 'battle_submit';
 }
