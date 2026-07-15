@@ -4,7 +4,44 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* DSA Battle - Dark competitive theme (always dark) */
+  /* DSA Battle - Light theme (dark is the default; see ThemeProvider defaultTheme="dark") */
+  --background: oklch(0.975 0.004 260);
+  --foreground: oklch(0.18 0.015 260);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.015 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.015 260);
+  --primary: oklch(0.62 0.19 41);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.94 0.006 260);
+  --secondary-foreground: oklch(0.25 0.015 260);
+  --muted: oklch(0.94 0.006 260);
+  --muted-foreground: oklch(0.46 0.015 260);
+  --accent: oklch(0.55 0.18 250);
+  --accent-foreground: oklch(0.99 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.89 0.008 260);
+  --input: oklch(0.94 0.006 260);
+  --ring: oklch(0.62 0.19 41);
+  --chart-1: oklch(0.62 0.19 41);
+  --chart-2: oklch(0.55 0.18 250);
+  --chart-3: oklch(0.55 0.16 150);
+  --chart-4: oklch(0.65 0.14 60);
+  --chart-5: oklch(0.52 0.2 330);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0.003 260);
+  --sidebar-foreground: oklch(0.18 0.015 260);
+  --sidebar-primary: oklch(0.62 0.19 41);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.94 0.006 260);
+  --sidebar-accent-foreground: oklch(0.18 0.015 260);
+  --sidebar-border: oklch(0.89 0.008 260);
+  --sidebar-ring: oklch(0.62 0.19 41);
+}
+
+.dark {
+  /* DSA Battle - Dark competitive theme (default) */
   --background: oklch(0.12 0.01 260);
   --foreground: oklch(0.95 0 0);
   --card: oklch(0.16 0.01 260);

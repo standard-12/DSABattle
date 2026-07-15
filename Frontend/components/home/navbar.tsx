@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { LogoutButton } from "@/components/auth/logout-button"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { createClient } from "@/utils/supabase/client"
 import { Swords, Menu, X } from "lucide-react"
 import type { User } from "@supabase/supabase-js"
@@ -61,6 +62,7 @@ export function Navbar() {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
           {user ? (
             <>
               <Button variant="ghost" asChild>
@@ -80,17 +82,20 @@ export function Navbar() {
           )}
         </div>
 
-        <button
-          className="flex items-center justify-center md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
-        >
-          {mobileOpen ? (
-            <X className="size-6 text-foreground" />
-          ) : (
-            <Menu className="size-6 text-foreground" />
-          )}
-        </button>
+        <div className="flex items-center gap-1 md:hidden">
+          <ThemeToggle />
+          <button
+            className="flex items-center justify-center"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          >
+            {mobileOpen ? (
+              <X className="size-6 text-foreground" />
+            ) : (
+              <Menu className="size-6 text-foreground" />
+            )}
+          </button>
+        </div>
       </nav>
 
       {mobileOpen && (

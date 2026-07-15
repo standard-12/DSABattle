@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 interface NavbarProps {
   profile: {
@@ -33,8 +34,9 @@ export function Navbar({ profile }: NavbarProps) {
           </div>
         </div>
 
-        {/* Right Section - Avatar */}
+        {/* Right Section - Theme + Avatar */}
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
             <span className="text-sm font-bold text-primary">{avatarInitial}</span>
           </div>

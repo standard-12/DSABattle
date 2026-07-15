@@ -7,8 +7,7 @@ export function HeroSection() {
     <section className="relative overflow-hidden">
       {/* Background grid pattern */}
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:80px_80px] opacity-20" />
-      {/* Radial glow */}
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]" />
+      {/* Radial glow now comes from the LivingGraphBackground canvas */}
 
       <div className="relative mx-auto flex max-w-7xl flex-col items-center px-6 pb-24 pt-20 text-center lg:pb-32 lg:pt-28">
         {/* Badge */}
