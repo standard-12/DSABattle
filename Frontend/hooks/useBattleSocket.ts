@@ -16,6 +16,13 @@ export interface BattleSubmissionResult {
   totalTestcases: number;
   runtimeMs: number | null;
   memoryKb: number | null;
+  /** Judge0 status text, e.g. "Runtime Error (NZEC)". */
+  statusDescription: string | null;
+  compileOutput: string | null;
+  /** Only present when the failing testcase is PUBLIC, or the failure was pre-execution. */
+  stderr: string | null;
+  /** 1-based index of the failing testcase. */
+  failedTestcase: number | null;
 }
 
 export interface UseBattleSocketOptions {
@@ -123,6 +130,10 @@ export function useBattleSocket(options: UseBattleSocketOptions) {
               totalTestcases: (message.payload?.totalTestcases as number) ?? 0,
               runtimeMs: (message.payload?.runtimeMs as number) ?? null,
               memoryKb: (message.payload?.memoryKb as number) ?? null,
+              statusDescription: (message.payload?.statusDescription as string) ?? null,
+              compileOutput: (message.payload?.compileOutput as string) ?? null,
+              stderr: (message.payload?.stderr as string) ?? null,
+              failedTestcase: (message.payload?.failedTestcase as number) ?? null,
             },
           }));
           break;

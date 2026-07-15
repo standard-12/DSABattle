@@ -16,19 +16,31 @@ const LANGUAGE_MAP: Record<SupportedLanguage, number> = {
 export type TestCase = {
   input: string;
   expectedOutput: string;
+  /** PRIVATE testcase output must never be echoed back to the browser. */
+  visibility: 'PUBLIC' | 'PRIVATE';
 };
 
+export type Verdict =
+  | 'ACCEPTED'
+  | 'WRONG_ANSWER'
+  | 'RUNTIME_ERROR'
+  | 'COMPILATION_ERROR'
+  | 'TIME_LIMIT_EXCEEDED';
+
 export type JudgeResult = {
-  verdict:
-    | 'ACCEPTED'
-    | 'WRONG_ANSWER'
-    | 'RUNTIME_ERROR'
-    | 'COMPILATION_ERROR'
-    | 'TIME_LIMIT_EXCEEDED';
+  verdict: Verdict;
   passedTestcases: number;
   totalTestcases: number;
   runtimeMs: number | null;
   memoryKb: number | null;
+  /** Judge0's status text, e.g. "Runtime Error (NZEC)". Safe: contains no input. */
+  statusDescription: string | null;
+  /** Compiler diagnostics. Safe: compilation happens before any stdin is read. */
+  compileOutput: string | null;
+  /** Program stderr. Only populated when the failing testcase is PUBLIC. */
+  stderr: string | null;
+  /** 1-based index of the testcase that failed; null when accepted. */
+  failedTestcase: number | null;
 };
 
 type ExecuteResult = {
@@ -48,6 +60,14 @@ function compareOutputs(actual: string | null | undefined, expected: string | nu
   return normalizeOutput(actual) === normalizeOutput(expected);
 }
 
+const MAX_DETAIL_LEN = 2000;
+
+function trim(text: string | null | undefined): string | null {
+  const value = (text ?? '').trim();
+  if (!value) return null;
+  return value.length > MAX_DETAIL_LEN ? `${value.slice(0, MAX_DETAIL_LEN)}\n…(truncated)` : value;
+}
+
 async function executeCode(
   sourceCode: string,
   language: SupportedLanguage,
@@ -55,7 +75,6 @@ async function executeCode(
 ): Promise<ExecuteResult> {
   const languageId = LANGUAGE_MAP[language];
   if (!languageId) throw new Error(`Unsupported language: ${language}`);
-  if (!config.judge0Url) throw new Error('JUDGE0_URL is missing');
 
   const submitResponse = await fetch(
     `${config.judge0Url}/submissions?base64_encoded=false&wait=false`,
@@ -75,6 +94,7 @@ async function executeCode(
 
   if (!submitResponse.ok) {
     const errorText = await submitResponse.text();
+    console.error(`[Judge0] Submit failed (${submitResponse.status}): ${errorText}`);
     throw new Error(`Failed to submit to Judge0: ${errorText}`);
   }
 
@@ -82,6 +102,7 @@ async function executeCode(
 
   const maxPolls = 30;
   const pollInterval = 500;
+  let lastPollError: string | null = null;
 
   for (let i = 0; i < maxPolls; i++) {
     await new Promise((resolve) => setTimeout(resolve, pollInterval));
@@ -89,7 +110,12 @@ async function executeCode(
     const pollResponse = await fetch(
       `${config.judge0Url}/submissions/${token}?base64_encoded=false`,
     );
-    if (!pollResponse.ok) continue;
+    if (!pollResponse.ok) {
+      const errorText = await pollResponse.text();
+      lastPollError = `${pollResponse.status}: ${errorText}`;
+      console.error(`[Judge0] Poll failed for token ${token} (attempt ${i + 1}/${maxPolls}): ${lastPollError}`);
+      continue;
+    }
 
     const result = (await pollResponse.json()) as {
       status?: { id: number; description: string };
@@ -112,7 +138,11 @@ async function executeCode(
     }
   }
 
-  throw new Error('Execution timed out');
+  throw new Error(
+    lastPollError
+      ? `Execution timed out for token ${token} — last poll error: ${lastPollError}`
+      : `Execution timed out for token ${token} (Judge0 never reached status >= 3)`,
+  );
 }
 
 export async function judgeSubmission(
@@ -124,39 +154,59 @@ export async function judgeSubmission(
   let maxRuntimeMs = 0;
   let maxMemoryKb = 0;
 
-  for (const testcase of testcases) {
+  for (const [index, testcase] of testcases.entries()) {
     const result = await executeCode(sourceCode, language, testcase.input);
     const statusId = result.status.id;
     const outputText = `${result.stdout}\n${result.stderr}\n${result.compileOutput}`;
-
-    if (outputText.includes('SyntaxError') || outputText.includes('IndentationError')) {
-      return { verdict: 'COMPILATION_ERROR', passedTestcases: passed, totalTestcases: testcases.length, runtimeMs: null, memoryKb: null };
-    }
 
     const runtimeMs = result.time ? Math.round(Number(result.time) * 1000) : null;
     const memoryKb = result.memory ?? null;
     maxRuntimeMs = Math.max(maxRuntimeMs, runtimeMs ?? 0);
     maxMemoryKb = Math.max(maxMemoryKb, memoryKb ?? 0);
 
-    if (statusId === 5) {
-      return { verdict: 'TIME_LIMIT_EXCEEDED', passedTestcases: passed, totalTestcases: testcases.length, runtimeMs, memoryKb };
-    }
-    if (statusId === 6) {
-      return { verdict: 'COMPILATION_ERROR', passedTestcases: passed, totalTestcases: testcases.length, runtimeMs: null, memoryKb: null };
-    }
-    if (statusId >= 7 && statusId <= 12) {
-      return { verdict: 'RUNTIME_ERROR', passedTestcases: passed, totalTestcases: testcases.length, runtimeMs, memoryKb };
-    }
-    if (statusId !== 3) {
-      return { verdict: 'RUNTIME_ERROR', passedTestcases: passed, totalTestcases: testcases.length, runtimeMs, memoryKb };
+    // `preExecution` = the program failed before it ever consumed stdin (compile /
+    // parse error), so its diagnostics cannot contain testcase input and are always
+    // safe to surface. Otherwise stderr may echo the input in a traceback, so it is
+    // only exposed for PUBLIC testcases.
+    const fail = (verdict: Verdict, preExecution: boolean): JudgeResult => ({
+      verdict,
+      passedTestcases: passed,
+      totalTestcases: testcases.length,
+      runtimeMs: preExecution ? null : runtimeMs,
+      memoryKb: preExecution ? null : memoryKb,
+      statusDescription: result.status.description,
+      compileOutput: trim(result.compileOutput),
+      stderr:
+        preExecution || testcase.visibility === 'PUBLIC' ? trim(result.stderr) : null,
+      failedTestcase: index + 1,
+    });
+
+    // Python reports syntax/indentation errors at runtime, not as a Judge0 compile error.
+    if (outputText.includes('SyntaxError') || outputText.includes('IndentationError')) {
+      return fail('COMPILATION_ERROR', true);
     }
 
+    if (statusId === 5) return fail('TIME_LIMIT_EXCEEDED', false);
+    if (statusId === 6) return fail('COMPILATION_ERROR', true);
+    if (statusId >= 7 && statusId <= 12) return fail('RUNTIME_ERROR', false);
+    if (statusId !== 3) return fail('RUNTIME_ERROR', false);
+
     if (!compareOutputs(result.stdout, testcase.expectedOutput)) {
-      return { verdict: 'WRONG_ANSWER', passedTestcases: passed, totalTestcases: testcases.length, runtimeMs, memoryKb };
+      return fail('WRONG_ANSWER', false);
     }
 
     passed++;
   }
 
-  return { verdict: 'ACCEPTED', passedTestcases: passed, totalTestcases: testcases.length, runtimeMs: maxRuntimeMs, memoryKb: maxMemoryKb };
+  return {
+    verdict: 'ACCEPTED',
+    passedTestcases: passed,
+    totalTestcases: testcases.length,
+    runtimeMs: maxRuntimeMs,
+    memoryKb: maxMemoryKb,
+    statusDescription: 'Accepted',
+    compileOutput: null,
+    stderr: null,
+    failedTestcase: null,
+  };
 }

@@ -32,6 +32,10 @@ export function SolverWorkspace({ problemId }: SolverWorkspaceProps) {
           totalTestcases: data.totalTestcases ?? 0,
           runtimeMs: data.runtimeMs ?? null,
           memoryKb: data.memoryKb ?? null,
+          statusDescription: data.statusDescription ?? null,
+          compileOutput: data.compileOutput ?? null,
+          stderr: data.stderr ?? null,
+          failedTestcase: data.failedTestcase ?? null,
         });
       }
     } catch (error) {

@@ -225,43 +225,54 @@ export async function handleBattleSubmit(
   clientId: string,
   payload: { battleId: string; userId: string; problemId: string; code: string; language: Language },
 ): Promise<void> {
+  const logPrefix = `[Battle][${payload.battleId}][${payload.userId}]`;
   try {
+    console.log(`${logPrefix} handleBattleSubmit start | problem=${payload.problemId} lang=${payload.language} codeLen=${payload.code.length}`);
+
     const supabase = getSupabase();
 
     const room = await getRoom(payload.battleId);
     if (!room) {
+      console.warn(`${logPrefix} Rejected — room not found (checked memory + DB)`);
       sendErrorToClient(clientId, 'Battle not found', 'BATTLE_NOT_FOUND');
       return;
     }
     if (room.ended) {
+      console.warn(`${logPrefix} Rejected — battle already ended`);
       sendErrorToClient(clientId, 'This battle has already ended', 'BATTLE_ENDED');
       return;
     }
 
-    // Fetch private test cases (server has service-role access)
+    // Fetch private test cases (server has service-role access).
+    // `visibility` is needed so the judge knows whether stderr is safe to echo back.
     const { data: testcases, error: tcErr } = await supabase
       .from('problem_test_cases')
-      .select('input, expected_output')
+      .select('input, expected_output, visibility')
       .eq('problem_id', payload.problemId)
       .order('order_index', { ascending: true });
 
     if (tcErr || !testcases) {
-      console.error('[Battle] Failed to load test cases:', tcErr?.message);
+      console.error(`${logPrefix} Failed to load test cases:`, tcErr?.message);
       sendErrorToClient(clientId, 'Failed to load test cases', 'TESTCASE_LOAD_FAILED');
       return;
     }
 
+    console.log(`${logPrefix} Loaded ${testcases.length} test case(s), judging...`);
+
     const result = await judgeSubmission(
       payload.code,
       payload.language,
-      (testcases as { input: string; expected_output: string }[]).map((tc) => ({
+      (testcases as { input: string; expected_output: string; visibility: 'PUBLIC' | 'PRIVATE' }[]).map((tc) => ({
         input: tc.input,
         expectedOutput: tc.expected_output,
+        visibility: tc.visibility,
       })),
     );
 
+    console.log(`${logPrefix} Verdict: ${result.verdict} (${result.passedTestcases}/${result.totalTestcases}) status="${result.statusDescription}" failedTest=${result.failedTestcase ?? '-'} time=${result.runtimeMs}ms mem=${result.memoryKb}kb`);
+
     // Persist the submission
-    await supabase.from('submissions').insert({
+    const { error: insertErr } = await supabase.from('submissions').insert({
       battle_id: payload.battleId,
       user_id: payload.userId,
       problem_id: payload.problemId,
@@ -274,7 +285,13 @@ export async function handleBattleSubmit(
       total_testcases: result.totalTestcases,
     });
 
-    // Tell the submitter their verdict
+    if (insertErr) {
+      console.error(`${logPrefix} Failed to persist submission:`, insertErr.message);
+    } else {
+      console.log(`${logPrefix} Submission persisted`);
+    }
+
+    // Tell the submitter their verdict, with the failure detail from Judge0.
     const resultMessage: SubmissionResultMessage = {
       type: 'submission_result',
       payload: {
@@ -283,12 +300,16 @@ export async function handleBattleSubmit(
         totalTestcases: result.totalTestcases,
         runtimeMs: result.runtimeMs,
         memoryKb: result.memoryKb,
+        statusDescription: result.statusDescription,
+        compileOutput: result.compileOutput,
+        stderr: result.stderr,
+        failedTestcase: result.failedTestcase,
       },
       timestamp: Date.now(),
     };
     broadcastToClient(clientId, resultMessage);
 
-    // Notify the opponent that this player submitted
+    // Notify the opponent that this player submitted (verdict only — never their error detail)
     const self = room.participants.find((p) => p.userId === payload.userId);
     const opponent = room.participants.find((p) => p.userId !== payload.userId);
     if (opponent?.clientId) {
@@ -306,7 +327,7 @@ export async function handleBattleSubmit(
       await finalizeBattle(room, payload.userId);
     }
   } catch (err) {
-    console.error('[Battle] handleBattleSubmit error:', err);
+    console.error(`${logPrefix} handleBattleSubmit error:`, err);
     sendErrorToClient(clientId, 'Submission failed', 'SUBMIT_FAILED');
   }
 }

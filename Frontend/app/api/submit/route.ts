@@ -16,9 +16,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // `visibility` is needed so the judge knows whether stderr is safe to echo back.
     const { data: testcases, error } = await supabaseAdmin
       .from("problem_test_cases")
-      .select("input, expected_output")
+      .select("input, expected_output, visibility")
       .eq("problem_id", problemId)
       .order("order_index", { ascending: true });
 
@@ -39,6 +40,7 @@ export async function POST(req: NextRequest) {
       testcases: testcases.map((tc) => ({
         input: tc.input,
         expectedOutput: tc.expected_output,
+        visibility: tc.visibility,
       })),
     });
 

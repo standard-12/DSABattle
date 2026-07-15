@@ -96,7 +96,10 @@ export interface BattleJoinedMessage extends WebSocketMessage {
   };
 }
 
-/** Verdict for the submitter's own battle submission. */
+/**
+ * Verdict for the submitter's own battle submission, plus enough Judge0 detail
+ * for the player to see *why* they failed. Never sent to the opponent.
+ */
 export interface SubmissionResultMessage extends WebSocketMessage {
   type: 'submission_result';
   payload: {
@@ -105,6 +108,13 @@ export interface SubmissionResultMessage extends WebSocketMessage {
     totalTestcases: number;
     runtimeMs: number | null;
     memoryKb: number | null;
+    /** Judge0 status text, e.g. "Runtime Error (NZEC)". */
+    statusDescription: string | null;
+    compileOutput: string | null;
+    /** Only populated when the failing testcase is PUBLIC, or the failure was pre-execution. */
+    stderr: string | null;
+    /** 1-based index of the failing testcase; null when accepted. */
+    failedTestcase: number | null;
   };
 }
 

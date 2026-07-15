@@ -6,6 +6,16 @@ const LANGUAGE_MAP: Record<SupportedLanguage, number> = {
   cpp: 54,
 };
 
+// Local Judge0 docker-compose instance (see server/README or CLAUDE.md for setup).
+const DOCKER_JUDGE0_URL = "http://localhost:2358";
+
+// AWS_VM_URL wins if set, else JUDGE0_URL override, else the local docker instance.
+function resolveJudge0Url(): string {
+  return (
+    process.env.AWS_VM_URL || process.env.JUDGE0_URL || DOCKER_JUDGE0_URL
+  );
+}
+
 export type ExecuteCodeParams = {
   sourceCode: string;
   language: SupportedLanguage;
@@ -35,11 +45,7 @@ export async function executeCode({
     throw new Error(`Unsupported language: ${language}`);
   }
 
-  const judge0Url = process.env.JUDGE0_URL;
-
-  if (!judge0Url) {
-    throw new Error("JUDGE0_URL is missing");
-  }
+  const judge0Url = resolveJudge0Url();
 
   const submitResponse = await fetch(
     `${judge0Url}/submissions?base64_encoded=false&wait=false`,

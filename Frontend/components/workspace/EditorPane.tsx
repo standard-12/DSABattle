@@ -21,6 +21,13 @@ export type SubmissionView = {
   totalTestcases: number;
   runtimeMs: number | null;
   memoryKb: number | null;
+  /** Judge0 status text, e.g. "Runtime Error (NZEC)". */
+  statusDescription?: string | null;
+  compileOutput?: string | null;
+  /** Only present when the failing testcase is PUBLIC, or the failure was pre-execution. */
+  stderr?: string | null;
+  /** 1-based index of the failing testcase. */
+  failedTestcase?: number | null;
 };
 
 type EditorPaneProps = {
@@ -200,6 +207,20 @@ export function EditorPane({
                           {result.passedTestcases}/{result.totalTestcases} testcases
                         </span>
                       </div>
+
+                      {/* Why it failed: Judge0's status text + the testcase it died on */}
+                      {!accepted && (result.statusDescription || result.failedTestcase) && (
+                        <p className="mt-1.5 text-xs text-red-400/90">
+                          {result.statusDescription}
+                          {result.failedTestcase != null && (
+                            <span className="text-muted-foreground">
+                              {result.statusDescription ? " · " : ""}
+                              failed on testcase {result.failedTestcase} of {result.totalTestcases}
+                            </span>
+                          )}
+                        </p>
+                      )}
+
                       <div className="mt-2 flex gap-4 text-xs text-muted-foreground">
                         <span>Runtime: {result.runtimeMs ?? "-"} ms</span>
                         <span>Memory: {result.memoryKb ?? "-"} KB</span>
@@ -207,6 +228,28 @@ export function EditorPane({
                     </div>
                   )}
 
+                  {/* Submission error detail from Judge0 */}
+                  {result?.compileOutput && (
+                    <ConsoleBlock
+                      label="Compile Error"
+                      value={result.compileOutput}
+                      tone="error"
+                    />
+                  )}
+                  {result?.stderr && (
+                    <ConsoleBlock label="Error Output" value={result.stderr} tone="error" />
+                  )}
+                  {result &&
+                    !accepted &&
+                    !result.compileOutput &&
+                    !result.stderr &&
+                    result.verdict !== "WRONG_ANSWER" && (
+                      <p className="text-xs italic text-muted-foreground">
+                        No error output available — this testcase is hidden.
+                      </p>
+                    )}
+
+                  {/* Run (custom stdin) output */}
                   <ConsoleBlock label="Stdout" value={output.stdout} />
                   <ConsoleBlock label="Stderr" value={output.stderr} tone="error" />
                   {output.compileOutput && (
